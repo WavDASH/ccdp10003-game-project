@@ -18,13 +18,13 @@ enum State { NORMAL, DASH, WALL_JUMP_LOCK }
 # ─── Tunable parameters ─────────────────────────────────────────────
 
 @export_group("Horizontal Movement")
-@export var max_speed: float = 260.0
+@export var max_speed: float = 280.0
 ## Acceleration when grounded with directional input (~5 frames to max).
-@export var ground_accel: float = 3200.0
+@export var ground_accel: float = 3800.0
 ## Deceleration when grounded with no input (~4 frames to stop).
 @export var ground_decel: float = 3600.0
 ## Acceleration when airborne with directional input.
-@export var air_accel: float = 2400.0
+@export var air_accel: float = 2800.0
 ## Deceleration when airborne with no input.
 @export var air_decel: float = 1600.0
 ## Extra multiplier applied to accel when input opposes current velocity.
@@ -32,18 +32,19 @@ enum State { NORMAL, DASH, WALL_JUMP_LOCK }
 @export var turn_accel_mult: float = 1.8
 
 @export_group("Gravity")
-## Base (ascent) gravity.
-@export var gravity: float = 1400.0
-## Descent gravity multiplier — fall faster than rise.
-@export var fall_gravity_mult: float = 1.4
-@export var max_fall_speed: float = 900.0
-## Gravity multiplier near the apex of a jump (small hang time).
-@export var apex_gravity_mult: float = 0.8
+## Base (ascent) gravity — how fast upward velocity decelerates.
+@export var gravity: float = 1800.0
+## Descent gravity multiplier — fall faster than rise for decisive drops.
+@export var fall_gravity_mult: float = 1.6
+## Terminal velocity — hard cap on downward speed (prevents runaway fall).
+@export var max_fall_speed: float = 750.0
+## Gravity multiplier near the apex of a jump (creates hang time contrast).
+@export var apex_gravity_mult: float = 0.55
 ## Velocity threshold below which apex gravity kicks in.
-@export var apex_velocity_threshold: float = 50.0
+@export var apex_velocity_threshold: float = 60.0
 
 @export_group("Jump")
-@export var jump_speed: float = 540.0
+@export var jump_speed: float = 580.0
 @export var coyote_frames: int = 6
 @export var jump_buffer_frames: int = 6
 ## Upward velocity multiplier when jump is released early.
@@ -62,7 +63,7 @@ enum State { NORMAL, DASH, WALL_JUMP_LOCK }
 
 @export_group("Wall Jump")
 @export var wall_jump_h_speed: float = 260.0
-@export var wall_jump_v_speed: float = 460.0
+@export var wall_jump_v_speed: float = 490.0
 ## Frames of forced horizontal velocity after wall jump.
 @export var wall_jump_lock_frames: int = 6
 @export var wall_jump_refills_dash: bool = true

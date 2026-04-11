@@ -139,9 +139,11 @@ Each room has its own tick counter (`room_tick`) that advances with `time_direct
 | Toggle debug panel | F3 |
 
 The player has **Celeste-inspired movement feel**:
-- **Acceleration-based movement**: ~9 frames to max speed, ~6 frames to stop on ground, slower air control
+- **Acceleration-based movement**: ~5 frames to max speed, ~4 frames to stop on ground, responsive air control
 - **Input priority**: when both left+right held, last-pressed wins
+- **Strong gravity**: fast descent with pronounced apex hang time at jump peak. Max fall speed capped at 750 px/s.
 - **Jump**: coyote time (6 frames), jump buffering (6 frames), variable height (release early for short hop), apex gravity reduction (hang time at peak)
+- **Crush death**: getting trapped between moving geometry (platform, closing door) and solid walls/floors kills the player
 - **Eight-direction dash**: one per airborne period, refills on landing. Shift/K to activate. Direction from held input; no input = facing direction
 - **Wall slide**: press into a wall while airborne and falling — fall speed is capped for a controlled descent
 - **Wall jump**: press jump while airborne and near a wall (grace window of 4 frames). Brief lock period prevents re-grab. Refills dash.

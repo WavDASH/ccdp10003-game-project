@@ -15,7 +15,9 @@ Current state of the prototype — what works, what has rough edges, and what is
 - **Room transitions**: RoomManager loads scenes, places player at named entries, discovers exits.
 - **Editor experience**: @tool scripts with `_get_configuration_warnings()` on most components, editor overlays for bounds/wiring/paths.
 - **Hazard system**: kills active player on contact (forward and reverse), triggers level restart.
+- **Crush detection**: player dies if physically trapped inside solid geometry by moving platforms or closing doors. Works in both forward and reverse mode.
 - **Echo collapse**: geometry overlap and hazard overlap detection with visual collapse animation.
+- **Per-room timeline sandbox**: each room has fully independent timeline state. Room transitions reset tick, branches, echoes, VFX, and reversal cycle.
 
 ## Known Edge Cases
 
@@ -25,6 +27,7 @@ Current state of the prototype — what works, what has rough edges, and what is
 - **Corner correction** uses `test_move()` which queries the physics server. On very complex collision geometry (many overlapping shapes), this could be slower than expected.
 - **Echo VFX (dash trails)** on echoes use global aging — they play forward/backward with the game clock. If an echo's dash trail event is near the edge of the playback range, the ghost may pop in/out abruptly.
 - **Moving platforms** do not record their position in frame data. Echo passengers riding a platform are replayed at their recorded global position, which may visually drift if the platform's trigger state differs on replay.
+- **Crush detection** uses a 2px-per-side shrink on the player's collision shape. In extremely tight spaces (less than 4px clearance but technically passable), the player won't be crushed. This is intentional to avoid false positives from normal wall/floor contact.
 
 ## Not Implemented
 

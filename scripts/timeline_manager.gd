@@ -80,6 +80,9 @@ var actor_collision_size: Vector2 = Vector2(24, 48)
 # ─── Cached echo-validation shape (avoids per-frame allocation) ──
 var _echo_validation_shape: RectangleShape2D = null
 
+# ─── Cached crush-detection shape ────────────────────────────────
+var _crush_detection_shape: RectangleShape2D = null
+
 # ─── Signals ──────────────────────────────────────────────────────────
 signal echo_spawned(echo)
 signal echo_collapsed(echo, reason)
@@ -111,6 +114,7 @@ func _physics_process(_delta: float) -> void:
 	_update_echoes()
 	_update_mechanisms()
 	_check_player_hazard()
+	_check_player_crush()
 	_check_goal()
 	_advance_tick()
 
@@ -470,6 +474,49 @@ func _check_player_hazard() -> void:
 		if pr.intersects(h_rect):
 			restart_level()
 			return
+
+
+## Crush detection — kills the player if their collision shape overlaps
+## World or Door layer bodies. Normal CharacterBody2D physics keeps the
+## player separated from static geometry. Overlap only occurs when an
+## external moving body (AnimatableBody2D platform, closing door) pushes
+## the player into solid geometry, compressing them into an impossible space.
+##
+## NOT gated by is_player_interactable() — crush kills in both forward
+## and reverse mode. This is a physical/environmental death, not a
+## mechanism interaction.
+##
+## Uses a 2px-per-side shrink to avoid false positives from normal
+## surface contact (CharacterBody2D's safe margin).
+func _check_player_crush() -> void:
+	if active_player == null or not is_instance_valid(active_player):
+		return
+	var space := get_viewport().world_2d.direct_space_state
+	if space == null:
+		return
+	var cs_node = active_player.get_node_or_null("CollisionShape2D")
+	if cs_node == null or not (cs_node.shape is RectangleShape2D):
+		return
+
+	# Lazy-init cached shape.
+	if _crush_detection_shape == null:
+		_crush_detection_shape = RectangleShape2D.new()
+	# Shrink by 2px per side — tight enough to catch real embedding,
+	# loose enough to ignore normal surface contact separation.
+	_crush_detection_shape.size = cs_node.shape.size - Vector2(4, 4)
+
+	var params := PhysicsShapeQueryParameters2D.new()
+	params.shape = _crush_detection_shape
+	params.transform = active_player.global_transform
+	params.collision_mask = LAYER_WORLD | LAYER_DOOR
+	params.collide_with_bodies = true
+	params.collide_with_areas = false
+	# Exclude the player's own body from the query.
+	params.exclude = [active_player.get_rid()]
+
+	if space.intersect_shape(params).size() > 0:
+		restart_level()
+		return
 
 
 func _check_goal() -> void:

@@ -376,10 +376,10 @@ Acceleration-based, not instant. Parameters differ for ground vs air:
 
 | Parameter | Default | Purpose |
 |---|---|---|
-| `ground_accel` | 1800 | Reach max_speed in ~9 frames |
-| `ground_decel` | 2600 | Stop in ~6 frames |
-| `air_accel` | 1200 | Slower air control |
-| `air_decel` | 800 | Minimal air friction |
+| `ground_accel` | 3800 | Reach max_speed in ~5 frames |
+| `ground_decel` | 3600 | Stop in ~4 frames |
+| `air_accel` | 2800 | Responsive air control |
+| `air_decel` | 1600 | Moderate air friction |
 
 When velocity exceeds `max_speed` (e.g. after dash), `move_toward` naturally decays it back, creating Celeste-like momentum curves.
 
@@ -392,9 +392,10 @@ When both left and right are held, the most recently pressed key wins. On releas
 - **Coyote time** (6 frames): can still jump after walking off a ledge
 - **Edge grace** (`edge_jump_grace_pixels` = 4): uses `test_move()` to check if the player is within a few pixels of a floor below them, even when `is_on_floor()` is false. Activates coyote time for ledge-adjacent jumps where the collision shape extends past the platform visually. This is a spatial extension to coyote time's temporal grace.
 - **Jump buffer** (6 frames): buffered jump input before landing
-- **Variable height**: releasing jump early multiplies upward velocity by 0.4
-- **Apex gravity**: gravity reduced by 50% when `abs(velocity.y) < 80` (creates hang time)
-- **Terminal velocity**: max fall speed capped at 600 px/s
+- **Variable height**: releasing jump early multiplies upward velocity by 0.3
+- **Apex gravity**: gravity reduced to 55% when `abs(velocity.y) < 60` (creates pronounced hang time, strong contrast with fast descent)
+- **Terminal velocity**: max fall speed capped at 750 px/s
+- **Gravity tuning**: base gravity 1800 (ascent), descent multiplied by 1.6 (effective 2880) for decisive falls. The large gap between apex gravity (990) and descent gravity (2880) creates the Celeste-like feel of floating at the peak then snapping downward.
 
 ### Eight-Direction Dash
 
@@ -418,7 +419,7 @@ When both left and right are held, the most recently pressed key wins. On releas
 
 ### Wall Slide
 
-When the player is airborne, falling, and pressing into a wall, fall speed is capped at `wall_slide_max_fall_speed` (default 120 px/s) instead of `max_fall_speed` (900 px/s). This creates a slow slide down walls, giving the player time to decide whether to wall jump.
+When the player is airborne, falling, and pressing into a wall, fall speed is capped at `wall_slide_max_fall_speed` (default 120 px/s) instead of `max_fall_speed` (750 px/s). This creates a slow slide down walls, giving the player time to decide whether to wall jump.
 
 - Detection: `is_on_wall() and velocity.y > 0 and input direction opposes wall normal`
 - Implemented inside `_apply_gravity()` by selecting a lower `target_fall` before `move_toward()`
@@ -451,15 +452,42 @@ Called on level restart and room transitions. Resets all movement state:
 - Coyote/buffer counters → 0
 - Wall contact grace counter → 0, cached wall normal → zero
 - Input tracking → zeroed
+- MovementEffects → all VFX events cleared, all ghost sprites freed, monotonic tick reset
 
 ---
 
 ## Process Priority
 
 - **ActivePlayer**: `process_physics_priority = 0` (runs first — input, movement, recording, reversal)
-- **TimelineManager**: `process_physics_priority = 1` (runs second — echo update, mechanism query, hazard check, tick advance)
+- **TimelineManager**: `process_physics_priority = 1` (runs second — echo update, mechanism query, hazard check, crush check, tick advance)
 
 This ensures the player's state is recorded before the TimelineManager reads it, and echoes are updated at the same tick the player just recorded.
+
+---
+
+## Crush / Squish Detection
+
+`_check_player_crush()` in TimelineManager detects when the player is physically trapped inside solid geometry — typically caused by a moving platform (AnimatableBody2D) or closing door pushing the player into a wall or floor.
+
+**How it works:**
+1. After the player's `move_and_slide()` resolves (priority 0), TimelineManager queries the physics server (priority 1).
+2. Uses `intersect_shape()` with the player's collision shape shrunk by 2px per side (24x48 → 20x44).
+3. Queries against World (layer 1) + Door (layer 2) bodies only.
+4. If any overlap is found, the player is embedded in solid geometry → instant death → `restart_level()`.
+
+**Why it works:**
+- Normal CharacterBody2D physics keeps the player separated from static geometry (wall, floor, ceiling) with a tiny safe margin (~0.08px).
+- The 2px-per-side shrink means normal surface contact never triggers a false positive.
+- Overlap only happens when an external moving body (AnimatableBody2D, closing DoorBody) pushes the player through a surface into an impossible space.
+
+**Applies to both forward and reverse mode.** This is a physical/environmental death condition, not a mechanism interaction — it is NOT gated by `is_player_interactable()`. Same semantic category as hazard death.
+
+**Scenarios that trigger crush:**
+- Moving platform descends and traps the player against the floor
+- Closing door squeezes the player against a wall
+- Any solid geometry pushes the player into another solid body
+
+**Echo-safe:** Echoes don't run physics (`move_and_slide()`). They teleport to recorded positions. Crush detection only runs on the active player.
 
 ---
 

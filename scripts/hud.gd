@@ -70,7 +70,7 @@ func _ready() -> void:
 	_controls_label.position = Vector2(10, 616)
 	_controls_label.add_theme_font_size_override("font_size", 11)
 	_controls_label.add_theme_color_override("font_color", Color(0.4, 0.4, 0.4))
-	_controls_label.text = "A/D: Move  |  Space/W: Jump  |  Shift/K: Dash  |  R: Reverse  |  Backspace: Restart  |  F3: Debug"
+	_controls_label.text = "A/D: Move  |  Space/I: Jump  |  Shift/L: Dash  |  R/J: Reverse  |  Backspace: Restart  |  F3: Debug"
 	add_child(_controls_label)
 
 	# ── Debug panel (F3 toggle) ──
