@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bqduhxyb0t52b"]
+
+[ext_resource type="Script" uid="uid://b3d2557jlnq4o" path="res://scripts/echo_player.gd" id="1_echo"]
+[ext_resource type="Script" uid="uid://k5mpc2g5ignn" path="res://scripts/time_aware_animator.gd" id="2_animator"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(24, 48)
+
+[node name="EchoPlayer" type="CharacterBody2D" unique_id=422808275]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_echo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1737107933]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=494048891]
+color = Color(0, 0.8, 0.8, 0.45)
+polygon = PackedVector2Array(-12, -24, 12, -24, 12, 24, -12, 24)
+
+[node name="TimeAwareAnimator" type="Node" parent="." unique_id=1337112966]
+script = ExtResource("2_animator")

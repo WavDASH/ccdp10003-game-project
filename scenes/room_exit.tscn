@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://u366xkgrrj1i"]
+
+[ext_resource type="Script" uid="uid://ttwuj6nltnor" path="res://scripts/room_exit.gd" id="1_script"]
+
+[node name="RoomExit" type="Node2D" unique_id=850044069]
+script = ExtResource("1_script")
+entity_size = Vector2(16, 200)
+base_color = Color(0.2, 0.8, 0.2, 0.15)
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=996203496]
+texture_repeat = 2
+scale = Vector2(1, 0.255)
+color = Color(0.2, 0.8, 0.2, 0.15)
+polygon = PackedVector2Array(-8, -100, 8, -100, 8, 100, -8, 100)
+uv = PackedVector2Array(0, 0, 16, 0, 16, 200, 0, 200)

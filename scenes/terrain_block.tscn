@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/terrain_block.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(128, 32)
+
+[node name="TerrainBlock" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_script")
+block_size = Vector2(128, 32)
+block_color = Color(0.32, 0.32, 0.38, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-64, -16, 64, -16, 64, 16, -64, 16)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/goal_zone.gd" id="1_goal"]
+
+[node name="GoalZone" type="Node2D"]
+script = ExtResource("1_goal")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(1, 0.92, 0.2, 0.2)
+polygon = PackedVector2Array(-90, -14, 90, -14, 90, 14, -90, 14)

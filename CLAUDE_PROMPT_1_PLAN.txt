@@ -1,0 +1,94 @@
+Read these files first:
+- `CLAUDE.md`
+- `GAME_SPEC.md`
+
+Then inspect the repository / project structure.
+
+Your task in this step is **planning only**.
+Do **not** start implementing gameplay code yet.
+Do **not** make speculative engine/editor changes unless they are absolutely necessary to support planning.
+
+I want you to think independently, not just blindly follow the spec.
+If any part of the requested design seems risky, inconsistent, or overly complex, identify it clearly and propose a better MVP-friendly solution while preserving the intended game feel.
+
+## What you should do now
+
+1. Read and understand the intended game effect.
+2. Inspect the current repository structure.
+3. Identify the biggest technical risks.
+4. Decide on a practical architecture for the MVP.
+5. Generate a file named `IMPLEMENTATION_PLAN.md`.
+
+## `IMPLEMENTATION_PLAN.md` should include
+
+### 1. Goal summary
+- a concise restatement of the game effect we are trying to achieve
+
+### 2. MVP scope
+- exactly what will be included in the first playable prototype
+- exactly what will be left out for now
+
+### 3. Technical architecture
+Describe your proposed architecture for:
+- Godot scene structure
+- script structure
+- timeline model
+- branch / segment model
+- frame recording model
+- active player vs echo model
+- echo collapse logic
+- hazard / death / restart flow
+- pressure plate / door puzzle logic
+- visual filter / tint / transition logic
+
+### 4. Data model
+List the key data structures and what each should store.
+For example, if you use things like `TimelineManager`, `BranchTrack`, `FrameState`, `EchoPlayer`, explain them.
+
+### 5. Node hierarchy proposal
+Show the likely scene / node structure for the MVP.
+
+### 6. Collision layer / mask strategy
+Explain which things should collide and which should not.
+Especially cover:
+- active player vs echoes
+- echoes vs world
+- echoes vs puzzle elements
+- echoes vs hazards
+
+### 7. Risk analysis
+List the biggest implementation risks, such as:
+- making branch logic understandable
+- keeping echoes useful without overcomplicating physics
+- making echo collapse fair and readable
+- maintaining visual clarity with multiple echoes
+
+### 8. Build order
+Provide a practical step-by-step implementation order.
+For example:
+- movement
+- timeline recording
+- reversal switching
+- echo playback
+- puzzle elements
+- collapse logic
+- visual polish
+
+### 9. Acceptance criteria
+Define how we will know the MVP is good enough to build and test.
+
+### 10. Open questions / recommended simplifications
+If you think something should be simplified for the first build, say so explicitly.
+
+## Important behavior for this planning step
+
+- Do not begin the real build yet.
+- Do not over-engineer.
+- Aim for a robust first playable prototype.
+- Preserve the intended time-branch / echo fantasy.
+- After writing `IMPLEMENTATION_PLAN.md`, stop and wait for review.
+
+At the end, give me a short summary of:
+- the architecture you chose
+- the biggest risk
+- the most important simplification you recommend

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/timed_switch.gd" id="1_script"]
+
+[node name="TimedSwitch" type="Node2D"]
+script = ExtResource("1_script")
+visual_size = Vector2(64, 12)
+hold_ticks = 120
+unpressed_color = Color(0.1, 0.5, 0.6, 1)
+pressed_color = Color(0.2, 1.0, 1.0, 1)
+entity_size = Vector2(64, 12)
+base_color = Color(0.1, 0.5, 0.6, 1)
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.1, 0.5, 0.6, 1)
+polygon = PackedVector2Array(-32, -6, 32, -6, 32, 6, -32, 6)

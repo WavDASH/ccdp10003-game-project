@@ -1,0 +1,9 @@
+res://scripts/movement_effects.gd
+res://scripts/echo_player.gd
+res://scripts/active_player.gd
+res://scripts/base_room.gd
+res://scripts/hud.gd
+res://scripts/moving_platform.gd
+res://scripts/room_tick_context.gd
+res://scripts/timeline_manager.gd
+res://scripts/main.gd

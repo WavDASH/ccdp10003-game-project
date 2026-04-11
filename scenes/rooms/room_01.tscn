@@ -1,0 +1,240 @@
+[gd_scene load_steps=10 format=3 uid="uid://rc5u7gfj6ik1"]
+
+[ext_resource type="Script" path="res://scripts/base_room.gd" id="0_room"]
+[ext_resource type="PackedScene" path="res://scenes/switch.tscn" id="1_switch"]
+[ext_resource type="PackedScene" uid="uid://dikb1gaffhrv4" path="res://scenes/door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/hazard.tscn" id="3_hazard"]
+[ext_resource type="PackedScene" uid="uid://u366xkgrrj1i" path="res://scenes/room_exit.tscn" id="5_exit"]
+[ext_resource type="Script" uid="uid://cx43umte7ywmv" path="res://scripts/terrain_block.gd" id="6_terrain"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0yqvd"]
+size = Vector2(496, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yt80c"]
+size = Vector2(296, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jwebg"]
+size = Vector2(32, 480)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10nlv"]
+size = Vector2(32, 480)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2owu3"]
+size = Vector2(960, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpjxv"]
+size = Vector2(138, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t1qwn"]
+size = Vector2(398, 24)
+
+[node name="Room01" type="Node2D" unique_id=1030308899]
+script = ExtResource("0_room")
+room_bounds = Rect2(0, 0, 960, 640)
+
+[node name="Background" type="Polygon2D" parent="." unique_id=1823407976]
+color = Color(0.14, 0.14, 0.2, 1)
+polygon = PackedVector2Array(0, 154, 960, 154, 960, 640, 0, 640)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=1495567699]
+
+[node name="FloorLeft" type="StaticBody2D" parent="Geometry" unique_id=540490296]
+position = Vector2(280, 592)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(496, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/FloorLeft" unique_id=127397788]
+shape = SubResource("RectangleShape2D_0yqvd")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/FloorLeft" unique_id=1141491138]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-248, -48, 248, -48, 248, 48, -248, 48)
+uv = PackedVector2Array(0, 0, 496, 0, 496, 96, 0, 96)
+
+[node name="FloorRight" type="StaticBody2D" parent="Geometry" unique_id=717103901]
+position = Vector2(780, 592)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(296, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/FloorRight" unique_id=654680432]
+shape = SubResource("RectangleShape2D_yt80c")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/FloorRight" unique_id=766421110]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-148, -48, 148, -48, 148, 48, -148, 48)
+uv = PackedVector2Array(0, 0, 296, 0, 296, 96, 0, 96)
+
+[node name="WallLeft" type="StaticBody2D" parent="Geometry" unique_id=1021032366]
+position = Vector2(16, 400)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(32, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallLeft" unique_id=1909894052]
+shape = SubResource("RectangleShape2D_jwebg")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/WallLeft" unique_id=1319511014]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -240, 16, -240, 16, 240, -16, 240)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 480, 0, 480)
+
+[node name="WallRight" type="StaticBody2D" parent="Geometry" unique_id=1624278528]
+position = Vector2(944, 400)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(32, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallRight" unique_id=487353465]
+shape = SubResource("RectangleShape2D_10nlv")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/WallRight" unique_id=223821381]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -240, 16, -240, 16, 240, -16, 240)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 480, 0, 480)
+
+[node name="Ceiling" type="StaticBody2D" parent="Geometry" unique_id=1937818186]
+position = Vector2(480, 170)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(960, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ceiling" unique_id=716408689]
+shape = SubResource("RectangleShape2D_2owu3")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/Ceiling" unique_id=826248721]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
+uv = PackedVector2Array(0, 0, 960, 0, 960, 32, 0, 32)
+
+[node name="MidPlatform" type="StaticBody2D" parent="Geometry" unique_id=2076208190]
+position = Vector2(581, 432)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(138, 24)
+block_color = Color(0.38, 0.38, 0.44, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/MidPlatform" unique_id=1270100261]
+shape = SubResource("RectangleShape2D_mpjxv")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/MidPlatform" unique_id=690529061]
+texture_repeat = 2
+color = Color(0.38, 0.38, 0.44, 1)
+polygon = PackedVector2Array(-69, -12, 69, -12, 69, 12, -69, 12)
+uv = PackedVector2Array(0, 0, 138, 0, 138, 24, 0, 24)
+
+[node name="UpperPlatform" type="StaticBody2D" parent="Geometry" unique_id=1114061515]
+position = Vector2(231, 308)
+collision_mask = 0
+script = ExtResource("6_terrain")
+block_size = Vector2(398, 24)
+block_color = Color(0.38, 0.38, 0.44, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/UpperPlatform" unique_id=552365662]
+shape = SubResource("RectangleShape2D_t1qwn")
+
+[node name="Visual" type="Polygon2D" parent="Geometry/UpperPlatform" unique_id=1211497184]
+texture_repeat = 2
+color = Color(0.38, 0.38, 0.44, 1)
+polygon = PackedVector2Array(-199, -12, 199, -12, 199, 12, -199, 12)
+uv = PackedVector2Array(0, 0, 398, 0, 398, 24, 0, 24)
+
+[node name="Hazards" type="Node2D" parent="." unique_id=799571565]
+
+[node name="SpikePit" parent="Hazards" unique_id=278889937 instance=ExtResource("3_hazard")]
+position = Vector2(582, 615)
+entity_size = Vector2(92, 50)
+base_color = Color(0.85, 0.1, 0.1, 1)
+
+[node name="Mechanisms" type="Node2D" parent="." unique_id=123597177]
+
+[node name="Switch1" parent="Mechanisms" unique_id=1030610841 instance=ExtResource("1_switch")]
+position = Vector2(244, 534)
+trigger_size = Vector2(80, 32)
+entity_size = Vector2(64, 12)
+base_color = Color(0.6, 0.55, 0, 1)
+
+[node name="Switch2" parent="Mechanisms" unique_id=127225884 instance=ExtResource("1_switch")]
+position = Vector2(242, 289)
+trigger_size = Vector2(80, 32)
+entity_size = Vector2(64, 12)
+base_color = Color(0.6, 0.55, 0, 1)
+
+[node name="Door" parent="Mechanisms" unique_id=1022087233 instance=ExtResource("2_door")]
+position = Vector2(139, 247)
+triggers = Array[NodePath]([NodePath("../Switch1"), NodePath("../Switch2")])
+latching = true
+
+[node name="Spawns" type="Node2D" parent="." unique_id=1238853786]
+
+[node name="PlayerSpawn" type="Marker2D" parent="Spawns" unique_id=522677961 groups=["player_spawn"]]
+position = Vector2(780, 520)
+
+[node name="Exits" type="Node2D" parent="." unique_id=106398735]
+
+[node name="ExitLeft" parent="Exits" unique_id=304898257 instance=ExtResource("5_exit")]
+position = Vector2(39, 256)
+target_room = "room_02"
+target_entry = "right"
+exit_direction = "left"
+exit_size = Vector2(16, 300)
+entity_size = Vector2(16, 300)
+
+[node name="Entries" type="Node2D" parent="." unique_id=1158277544]
+
+[node name="EntryRight" type="Marker2D" parent="Entries" unique_id=1584921908 groups=["room_entries"]]
+position = Vector2(900, 520)
+
+[node name="EntryLeft" type="Marker2D" parent="Entries" unique_id=381983109 groups=["room_entries"]]
+position = Vector2(60, 520)
+
+[node name="Labels" type="Node2D" parent="." unique_id=1796177076]
+
+[node name="LblSpikes" type="Label" parent="Labels" unique_id=1478090287]
+offset_left = 556.0
+offset_top = 598.0
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 0.5)
+theme_override_font_sizes/font_size = 10
+text = "SPIKES"
+
+[node name="LblSW1" type="Label" parent="Labels" unique_id=538272681]
+offset_left = 233.0
+offset_top = 501.0
+offset_right = 256.0
+offset_bottom = 517.0
+theme_override_colors/font_color = Color(0.7, 0.65, 0, 0.55)
+theme_override_font_sizes/font_size = 11
+text = "SW1"
+
+[node name="LblSW2" type="Label" parent="Labels" unique_id=1788250313]
+offset_left = 248.0
+offset_top = 252.0
+offset_right = 271.0
+offset_bottom = 268.0
+theme_override_colors/font_color = Color(0.7, 0.65, 0, 0.55)
+theme_override_font_sizes/font_size = 11
+text = "SW2"
+
+[node name="LblDoor" type="Label" parent="Labels" unique_id=395289203]
+offset_left = 125.0
+offset_top = 186.0
+offset_right = 158.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0.6, 0.35, 0.15, 0.5)
+theme_override_font_sizes/font_size = 11
+text = "DOOR"
+
+[node name="LblExit" type="Label" parent="Labels" unique_id=1939547637]
+offset_left = 49.0
+offset_top = 200.0
+offset_right = 112.0
+offset_bottom = 216.0
+theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 0.5)
+theme_override_font_sizes/font_size = 11
+text = "<- ROOM 02"

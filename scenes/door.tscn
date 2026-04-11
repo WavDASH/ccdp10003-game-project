@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dikb1gaffhrv4"]
+
+[ext_resource type="Script" uid="uid://iohrmcngj4a0" path="res://scripts/door_receiver.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(48, 96)
+
+[node name="DoorReceiver" type="Node2D" unique_id=1460785305]
+script = ExtResource("1_door")
+entity_size = Vector2(48, 96)
+base_color = Color(0.55, 0.3, 0.1, 1)
+
+[node name="DoorBody" type="StaticBody2D" parent="." unique_id=829803644]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorBody" unique_id=801031584]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=985348676]
+color = Color(0.55, 0.3, 0.1, 1)
+polygon = PackedVector2Array(-24, -48, 24, -48, 24, 48, -24, 48)

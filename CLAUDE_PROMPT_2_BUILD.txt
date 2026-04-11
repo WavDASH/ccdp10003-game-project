@@ -1,0 +1,262 @@
+Read GAME_SPEC.md, CLAUDE.md, and the latest approved IMPLEMENTATION_PLAN.md carefully before making changes.
+
+You are now in the BUILD phase.
+
+Your task is to implement the Godot 4.6 GDScript prototype according to the approved plan, while also applying the latest design corrections and requirements below.
+
+Do not ignore these refinements.
+Use them to improve the implementation quality.
+
+==================================================
+BUILD GOAL
+==================================================
+
+Build a minimal but playable Godot 4.6 prototype of a 2D puzzle-platformer with timeline branching and visible echo cooperation.
+
+The prototype must be directly openable and testable in Godot 4.6.
+
+Use placeholder visuals only.
+Do not spend effort on final art, sound, menus, or polish beyond what is needed for mechanic clarity.
+
+==================================================
+CORE GAMEPLAY TO IMPLEMENT
+==================================================
+
+- A single active player can move left/right and jump.
+- Press R to invert time direction.
+- Press R again to switch direction again and create a new branch.
+- Previous branches remain as semi-transparent echoes.
+- Echoes replay recorded movement/actions from their branch.
+- Echoes can help solve puzzles.
+- Echoes do NOT physically collide with the active player.
+- Echoes can collapse if their recorded path becomes invalid in the current world state.
+- Echo collapse does NOT fail the level.
+- Only active player death fails the level and restarts the current level from the beginning.
+- Reverse-time mode must be visually distinct from forward-time mode.
+- Different echo generations must be visually distinguishable.
+
+==================================================
+IMPORTANT IMPLEMENTATION CORRECTIONS
+==================================================
+
+1. PIVOT-TICK SEMANTICS MUST BE EXPLICIT AND CONSISTENT
+You must define and implement a clear rule for what happens on the exact physics tick when R is pressed.
+
+This must include:
+- whether the current frame is recorded before or after reversal
+- when the active branch is sealed
+- whether the new branch starts on the same tick or the next tick
+- whether branch ranges are inclusive or half-open
+
+Choose one clean rule and apply it consistently everywhere.
+Document it clearly in code comments and/or in IMPLEMENTATION_NOTES.md.
+
+Avoid ambiguous off-by-one behavior.
+
+2. DO NOT RELY ON AREA2D SIGNALS FOR TELEPORTING ECHOES
+Echoes are replay puppets and may be repositioned directly each physics tick.
+Because of that, do NOT build the core system around fragile body_entered/body_exited behavior for echoes.
+
+Use a unified manual-query approach for echo-related detection wherever needed, especially for:
+- echo collapse checks
+- pressure plate activation by echoes
+- hazard checks for echoes
+
+If Area2D is used for some active-player interactions, keep the logic coherent and robust, but echo logic should be based on deliberate physics overlap queries rather than assuming signals will always be reliable.
+
+3. CREATE A DEDICATED ECHO VALIDATION PIPELINE
+Implement a dedicated validation path such as:
+- validate_echo_path_at_tick(...)
+or a similarly named system
+
+This should be the single place that determines whether an echo remains valid.
+
+For MVP, it should at least support:
+- overlap with solid static world
+- overlap with closed door / blocking gate
+- overlap with hazard
+
+It should also be structured so ground-loss / support checks can be added later without redesigning the system.
+
+4. SIMPLIFY COLLISION LAYER SEMANTICS
+Keep collision layers semantically clear.
+
+Do not mix doors and static world in a confusing way if it makes debugging harder.
+Prefer a clean separation such as:
+- static world
+- active player
+- echoes
+- interactable triggers
+- hazards
+- blocking doors / gates
+
+The system should be easy to extend later.
+
+5. ADD DEBUG READABILITY
+The HUD/debug info should not only show direction and tick.
+Also show enough information to make debugging branching readable, such as:
+- current branch ID
+- current generation / reversal count
+- current direction
+- current tick
+- active echo count
+
+This can be simple text, but it should help understand what is happening.
+
+6. PREPARE FOR FUTURE LIMITS
+Even if the MVP does not enforce them yet, the code structure should already expose configurable hooks for:
+- max reversal count
+- max rewind duration per reversal
+- max active echoes
+
+These can default to “disabled” or permissive values for now, but the structure should be ready.
+
+==================================================
+FIRST PLAYABLE TEST LEVEL REQUIREMENT
+==================================================
+
+The first level should NOT be an arbitrary level.
+It must be built around this very clear introductory puzzle:
+
+- There are two switches at different vertical heights:
+  - one lower switch
+  - one upper switch
+- There is a door/gate above that only opens while two valid actors are standing on both switches simultaneously
+- The player must cooperate with an echo to keep both switches activated at the same time
+- This level should clearly teach the idea:
+  “I can use a previous version of myself to help open the path”
+
+Keep this first level readable and not overly punishing.
+Do not make it too timing-heavy or too difficult.
+It is meant to prove and teach the core mechanic.
+
+==================================================
+FUTURE-PROOF MECHANISM ARCHITECTURE
+==================================================
+
+Do NOT hard-code the architecture so it only works for:
+- pressure plates
+- one specific door
+- hazards
+
+Even if the MVP only implements a few mechanism types, the code structure should be extensible.
+
+Design the system so future interactables can be added cleanly, for example things like:
+- weighted switches
+- timed gates
+- moving platforms
+- laser receivers
+- one-way barriers
+- time-reactive triggers
+- mechanisms that respond differently to active player vs echo
+
+You do NOT need to build all of these now.
+But the architecture should make it easy to add more later.
+
+Use a clean mechanism framework rather than one-off puzzle logic.
+For example, a structure involving generic trigger/receiver/controller relationships is preferred over hard-coded per-level hacks.
+
+==================================================
+ADDITIONAL TEST LEVEL IDEAS
+==================================================
+
+In addition to implementing the first playable level, also propose 2 to 4 additional small test-level concepts in a markdown file, for example TEST_LEVEL_IDEAS.md.
+
+These should explore other uses of the same mechanic, such as:
+- an echo opening a door, but collapsing if the path later becomes blocked
+- requiring two echoes from different reversals
+- a mechanism that only echoes can activate effectively
+- a route where preserving an echo’s validity is the core challenge
+
+These level ideas do not all need to be fully built now unless they are quick.
+But write them down clearly so the system is designed with them in mind.
+
+==================================================
+EXPECTED PROJECT STRUCTURE
+==================================================
+
+You may adapt the exact structure if needed, but keep it clean and understandable.
+
+Expected kinds of files include:
+- main scene
+- level scene(s)
+- active player scene/script
+- echo player scene/script
+- timeline manager
+- branch/timeline data structure
+- mechanism / trigger / receiver scripts
+- pressure switch / door / hazard scripts
+- UI/HUD/debug scripts
+- documentation files
+
+If the repository is still sparse or incomplete, create the required files cleanly.
+
+==================================================
+IMPLEMENTATION PRIORITIES
+==================================================
+
+Priority order:
+1. solid branch/tick/reversal architecture
+2. active player movement
+3. echo replay
+4. first teachable level with two vertically separated switches and an upper door
+5. echo validation/collapse
+6. death + restart
+7. visual clarity
+8. debug HUD
+9. extensibility and cleanup
+
+Do not get distracted by polish.
+
+==================================================
+VISUAL REQUIREMENTS
+==================================================
+
+Use placeholder visuals only, but make the prototype readable.
+
+Minimum visual clarity requirements:
+- active player clearly visible and fully opaque
+- echoes semi-transparent
+- different echo generations tinted differently
+- reverse-time mode visibly blue-tinted or similarly distinct
+- brief reversal transition effect when pressing R
+- switch pressed state clearly visible
+- door open/closed state clearly visible
+- hazard clearly readable
+
+==================================================
+LEVEL FAILURE / RESTART RULES
+==================================================
+
+- Echo collapse is NOT level failure
+- Echo collapse only means that echo can no longer help later
+- Active player death IS level failure
+- On active player death, restart the current level cleanly and quickly from its initial state
+
+==================================================
+WHAT TO PRODUCE
+==================================================
+
+Implement the playable prototype.
+
+Also produce/update supporting notes as needed, for example:
+- IMPLEMENTATION_NOTES.md
+- TEST_LEVEL_IDEAS.md
+
+At the end of the build, provide a concise summary of:
+- what files were created/changed
+- what is currently playable
+- controls
+- known limitations
+- what should be tested in Godot 4.6
+
+==================================================
+FINAL EXPECTATION
+==================================================
+
+The result should be a real Godot 4.6 prototype that I can open and test directly.
+
+Favor correctness, readability, and extensibility over over-engineered complexity.
+
+Build the smallest version that truly demonstrates:
+timeline branching, visible echoes, echo cooperation, echo collapse, and player-death restart.
