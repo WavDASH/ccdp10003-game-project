@@ -4,12 +4,11 @@
 
 [node name="RoomExit" type="Node2D" unique_id=850044069]
 script = ExtResource("1_script")
-entity_size = Vector2(16, 200)
+exit_size = Vector2(16, 100)
 base_color = Color(0.2, 0.8, 0.2, 0.15)
 
 [node name="Visual" type="Polygon2D" parent="." unique_id=996203496]
 texture_repeat = 2
-scale = Vector2(1, 0.255)
 color = Color(0.2, 0.8, 0.2, 0.15)
-polygon = PackedVector2Array(-8, -100, 8, -100, 8, 100, -8, 100)
-uv = PackedVector2Array(0, 0, 16, 0, 16, 200, 0, 200)
+polygon = PackedVector2Array(-8, -50, 8, -50, 8, 50, -8, 50)
+uv = PackedVector2Array(0, 0, 16, 0, 16, 100, 0, 100)

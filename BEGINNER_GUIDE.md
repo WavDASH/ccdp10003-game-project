@@ -161,26 +161,24 @@ The player has **Celeste-inspired movement feel**:
 2. Duplicate `room_template.tscn` and rename it (e.g. `room_03.tscn`). The template has a boxed room with floor/walls/ceiling, spawn point, and the standard node structure.
 3. Open the new scene.
 
-### Step 2: Set up the root node
+### Step 2: Set room size
 
-The root should already have `base_room.gd` attached (inherited from the duplicate). Verify:
-- **Script:** `res://scripts/base_room.gd`
-- **room_bounds:** `Rect2(0, 0, 960, 640)` — this controls camera limits.
+The root should already have `base_room.gd` attached (inherited from the duplicate). In the Inspector:
+- **room_bounds:** `Rect2(0, 0, 960, 640)` — controls camera limits AND room-shell size. Change the width/height to resize the room.
+- **wall_thickness:** `32` — thickness of shell walls. Rarely needs changing.
+
+When you change `room_bounds`, the **RoomShell** children (Floor, Ceiling, WallLeft, WallRight) and Background automatically reposition and resize. No need to manually adjust walls.
 
 ### Step 3: Build geometry
 
-Under the **Geometry** node, add terrain:
+Under the **Geometry** node, add terrain for your level content:
 
 1. Instance `scenes/terrain_block.tscn` as a child of Geometry.
 2. Position it in the 2D viewport.
 3. In the Inspector, set `block_size` to your desired dimensions.
 4. Set `resize_anchor` before changing size if you want a specific edge pinned.
 
-Standard room shell (already present in duplicated rooms):
-- **Floor:** position (480, 600), block_size (960, 80)
-- **WallLeft:** position (16, 320), block_size (32, 640)
-- **WallRight:** position (944, 320), block_size (32, 640)
-- **Ceiling:** position (480, 16), block_size (960, 32)
+The **RoomShell** node contains the auto-synced room boundary walls. The **Geometry** node is for manually placed puzzle content that does NOT auto-resize.
 
 ### Step 4: Add spawn and entry points
 
@@ -479,7 +477,7 @@ Remember: the reversal cycle (READY -> REVERSING -> LOCKED -> READY) means the p
 - Select the door and check the `triggers` array in the Inspector.
 - Verify trigger NodePaths resolve (no yellow warning triangle).
 - Check `require_all`: if true, ALL triggers must be active simultaneously.
-- If `latching` is false, the trigger must stay active while the player passes through.
+- If `close_delay_ticks` is 0, the trigger must stay active while the player passes through. Use a higher value (e.g. 120) for a grace period.
 
 ### Echo collapses immediately
 
@@ -526,7 +524,7 @@ Remember: the reversal cycle (READY -> REVERSING -> LOCKED -> READY) means the p
 
 - **BasePlaceable** — root for all editor-placeable entities. Provides `entity_size`, `base_color`, `base_texture`, `base_material`, `resize_anchor`, placeholder visual sync.
 - **BaseMechanismTrigger** — extends BasePlaceable with `trigger_size` and `activated` state. TimelineManager queries these each frame.
-- **BaseMechanismReceiver** — extends BasePlaceable with `triggers` array, `require_all`/`latching` logic, and `evaluate_triggers()`.
+- **BaseMechanismReceiver** — extends BasePlaceable with `triggers` array, `require_all`/`close_delay_ticks` logic, and `evaluate_triggers()`.
 - **TimeScheduledReceiver** — extends BasePlaceable with tick-based schedule evaluation.
 - **TerrainBlock** — extends StaticBody2D (not BasePlaceable). Has its own texture/resize system.
 - **MovingPlatform** — extends AnimatableBody2D (not BaseMechanismReceiver). Has its own trigger handling.

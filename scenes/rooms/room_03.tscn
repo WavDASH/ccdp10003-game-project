@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://dx8hkxancvtlr"]
+
+[ext_resource type="Script" uid="uid://ccfw2l5wuow58" path="res://scripts/base_room.gd" id="0_room"]
+[ext_resource type="Script" uid="uid://cx43umte7ywmv" path="res://scripts/terrain_block.gd" id="1_terrain"]
+[ext_resource type="PackedScene" path="res://scenes/terrain_block.tscn" id="3_tgfbo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iurs1"]
+size = Vector2(1920, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ie674"]
+size = Vector2(1920, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62lyk"]
+size = Vector2(32, 1280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtc6m"]
+size = Vector2(32, 1280)
+
+[node name="room_03" type="Node2D" unique_id=2133364670]
+script = ExtResource("0_room")
+room_bounds = Rect2(0, 0, 1920, 1280)
+camera_mode = 1
+camera_zoom = null
+camera_bounds = null
+camera_smoothing_enabled = null
+camera_smoothing_speed = null
+
+[node name="Background" type="Polygon2D" parent="." unique_id=1912324573]
+color = Color(0.14, 0.14, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1280, 0, 1280)
+
+[node name="RoomShell" type="Node2D" parent="." unique_id=1658056477]
+
+[node name="Floor" type="StaticBody2D" parent="RoomShell" unique_id=2133107316]
+position = Vector2(960, 1264)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(1920, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/Floor" unique_id=881103760]
+shape = SubResource("RectangleShape2D_iurs1")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/Floor" unique_id=541193191]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-960, -16, 960, -16, 960, 16, -960, 16)
+uv = PackedVector2Array(0, 0, 1920, 0, 1920, 32, 0, 32)
+
+[node name="Ceiling" type="StaticBody2D" parent="RoomShell" unique_id=613098137]
+position = Vector2(960, 16)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(1920, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/Ceiling" unique_id=1609702042]
+shape = SubResource("RectangleShape2D_ie674")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/Ceiling" unique_id=1966322079]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-960, -16, 960, -16, 960, 16, -960, 16)
+uv = PackedVector2Array(0, 0, 1920, 0, 1920, 32, 0, 32)
+
+[node name="WallLeft" type="StaticBody2D" parent="RoomShell" unique_id=451199725]
+position = Vector2(16, 640)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(32, 1280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/WallLeft" unique_id=409051461]
+shape = SubResource("RectangleShape2D_62lyk")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/WallLeft" unique_id=1239892177]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -640, 16, -640, 16, 640, -16, 640)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 1280, 0, 1280)
+
+[node name="WallRight" type="StaticBody2D" parent="RoomShell" unique_id=17572354]
+position = Vector2(1904, 640)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(32, 1280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/WallRight" unique_id=1821565361]
+shape = SubResource("RectangleShape2D_mtc6m")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/WallRight" unique_id=1844059984]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -640, 16, -640, 16, 640, -16, 640)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 1280, 0, 1280)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=257871241]
+
+[node name="TerrainBlock" parent="Geometry" unique_id=1679047828 instance=ExtResource("3_tgfbo")]
+position = Vector2(627, 911)
+
+[node name="Hazards" type="Node2D" parent="." unique_id=456988499]
+
+[node name="Mechanisms" type="Node2D" parent="." unique_id=26309797]
+
+[node name="Spawns" type="Node2D" parent="." unique_id=901083010]
+
+[node name="PlayerSpawn" type="Marker2D" parent="Spawns" unique_id=1586147721 groups=["player_spawn"]]
+position = Vector2(116, 1180)
+
+[node name="Entries" type="Node2D" parent="." unique_id=2043329277]
+
+[node name="EntryDefault" type="Marker2D" parent="Entries" unique_id=529871220 groups=["room_entries"]]
+position = Vector2(116, 1180)
+
+[node name="Exits" type="Node2D" parent="." unique_id=1583453736]
+
+[node name="Labels" type="Node2D" parent="." unique_id=498322501]

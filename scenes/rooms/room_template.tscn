@@ -6,14 +6,14 @@
 [sub_resource type="RectangleShape2D" id="floor_shape"]
 size = Vector2(960, 32)
 
+[sub_resource type="RectangleShape2D" id="ceil_shape"]
+size = Vector2(960, 32)
+
 [sub_resource type="RectangleShape2D" id="wall_l_shape"]
 size = Vector2(32, 640)
 
 [sub_resource type="RectangleShape2D" id="wall_r_shape"]
 size = Vector2(32, 640)
-
-[sub_resource type="RectangleShape2D" id="ceil_shape"]
-size = Vector2(960, 32)
 
 [node name="RoomTemplate" type="Node2D"]
 script = ExtResource("0_room")
@@ -23,67 +23,69 @@ room_bounds = Rect2(0, 0, 960, 640)
 color = Color(0.14, 0.14, 0.2, 1)
 polygon = PackedVector2Array(0, 0, 960, 0, 960, 640, 0, 640)
 
-[node name="Geometry" type="Node2D" parent="."]
+[node name="RoomShell" type="Node2D" parent="."]
 
-[node name="Floor" type="StaticBody2D" parent="Geometry"]
+[node name="Floor" type="StaticBody2D" parent="RoomShell"]
 position = Vector2(480, 624)
 collision_mask = 0
 script = ExtResource("1_terrain")
 block_size = Vector2(960, 32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Floor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/Floor"]
 shape = SubResource("floor_shape")
 
-[node name="Visual" type="Polygon2D" parent="Geometry/Floor"]
+[node name="Visual" type="Polygon2D" parent="RoomShell/Floor"]
 texture_repeat = 2
 color = Color(0.32, 0.32, 0.38, 1)
 polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
 uv = PackedVector2Array(0, 0, 960, 0, 960, 32, 0, 32)
 
-[node name="WallLeft" type="StaticBody2D" parent="Geometry"]
-position = Vector2(16, 320)
-collision_mask = 0
-script = ExtResource("1_terrain")
-block_size = Vector2(32, 640)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallLeft"]
-shape = SubResource("wall_l_shape")
-
-[node name="Visual" type="Polygon2D" parent="Geometry/WallLeft"]
-texture_repeat = 2
-color = Color(0.32, 0.32, 0.38, 1)
-polygon = PackedVector2Array(-16, -320, 16, -320, 16, 320, -16, 320)
-uv = PackedVector2Array(0, 0, 32, 0, 32, 640, 0, 640)
-
-[node name="WallRight" type="StaticBody2D" parent="Geometry"]
-position = Vector2(944, 320)
-collision_mask = 0
-script = ExtResource("1_terrain")
-block_size = Vector2(32, 640)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallRight"]
-shape = SubResource("wall_r_shape")
-
-[node name="Visual" type="Polygon2D" parent="Geometry/WallRight"]
-texture_repeat = 2
-color = Color(0.32, 0.32, 0.38, 1)
-polygon = PackedVector2Array(-16, -320, 16, -320, 16, 320, -16, 320)
-uv = PackedVector2Array(0, 0, 32, 0, 32, 640, 0, 640)
-
-[node name="Ceiling" type="StaticBody2D" parent="Geometry"]
+[node name="Ceiling" type="StaticBody2D" parent="RoomShell"]
 position = Vector2(480, 16)
 collision_mask = 0
 script = ExtResource("1_terrain")
 block_size = Vector2(960, 32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ceiling"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/Ceiling"]
 shape = SubResource("ceil_shape")
 
-[node name="Visual" type="Polygon2D" parent="Geometry/Ceiling"]
+[node name="Visual" type="Polygon2D" parent="RoomShell/Ceiling"]
 texture_repeat = 2
 color = Color(0.32, 0.32, 0.38, 1)
 polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
 uv = PackedVector2Array(0, 0, 960, 0, 960, 32, 0, 32)
+
+[node name="WallLeft" type="StaticBody2D" parent="RoomShell"]
+position = Vector2(16, 320)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(32, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/WallLeft"]
+shape = SubResource("wall_l_shape")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/WallLeft"]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -320, 16, -320, 16, 320, -16, 320)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 640, 0, 640)
+
+[node name="WallRight" type="StaticBody2D" parent="RoomShell"]
+position = Vector2(944, 320)
+collision_mask = 0
+script = ExtResource("1_terrain")
+block_size = Vector2(32, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomShell/WallRight"]
+shape = SubResource("wall_r_shape")
+
+[node name="Visual" type="Polygon2D" parent="RoomShell/WallRight"]
+texture_repeat = 2
+color = Color(0.32, 0.32, 0.38, 1)
+polygon = PackedVector2Array(-16, -320, 16, -320, 16, 320, -16, 320)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 640, 0, 640)
+
+[node name="Geometry" type="Node2D" parent="."]
 
 [node name="Hazards" type="Node2D" parent="."]
 

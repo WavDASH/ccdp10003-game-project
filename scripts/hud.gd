@@ -23,6 +23,7 @@ var _legend_label: Label = null
 var _controls_label: Label = null
 var _debug_label: Label = null
 var _complete_label: Label = null
+var _complete_subtitle: Label = null
 
 
 func _ready() -> void:
@@ -97,6 +98,23 @@ func _ready() -> void:
 	_complete_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	_complete_label.visible = false
 	add_child(_complete_label)
+
+	# ── Level complete subtitle ──
+	_complete_subtitle = Label.new()
+	_complete_subtitle.add_theme_font_size_override("font_size", 16)
+	_complete_subtitle.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 0.85))
+	_complete_subtitle.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
+	_complete_subtitle.add_theme_constant_override("shadow_offset_x", 2)
+	_complete_subtitle.add_theme_constant_override("shadow_offset_y", 2)
+	_complete_subtitle.text = "You reached the goal.\nPress Backspace to restart."
+	_complete_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_complete_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_complete_subtitle.offset_top = 36
+	_complete_subtitle.offset_bottom = 90
+	_complete_subtitle.offset_left = -200
+	_complete_subtitle.offset_right = 200
+	_complete_subtitle.visible = false
+	add_child(_complete_subtitle)
 
 
 func _process(_delta: float) -> void:
@@ -189,7 +207,11 @@ func _process(_delta: float) -> void:
 
 func show_level_complete() -> void:
 	_complete_label.visible = true
+	if _complete_subtitle:
+		_complete_subtitle.visible = true
 
 
 func hide_level_complete() -> void:
 	_complete_label.visible = false
+	if _complete_subtitle:
+		_complete_subtitle.visible = false

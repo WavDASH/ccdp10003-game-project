@@ -65,6 +65,7 @@ var _progress: float = 0.0
 var _origin: Vector2 = Vector2.ZERO
 
 var _shape: CollisionShape2D = null
+var _shape_made_unique: bool = false
 
 
 func _ready() -> void:
@@ -130,6 +131,9 @@ func _sync_visuals() -> void:
 	if _shape == null:
 		_shape = get_node_or_null("CollisionShape2D")
 	if _shape and _shape.shape is RectangleShape2D:
+		if not _shape_made_unique:
+			_shape.shape = _shape.shape.duplicate()
+			_shape_made_unique = true
 		_shape.shape.size = platform_size
 
 	var visual = get_node_or_null("Visual")

@@ -1,7 +1,7 @@
 ## RoomExit — trigger zone at a room edge that transitions to another room.
 ##
 ## Place at room edges. RoomManager checks player overlap each frame.
-## The exit_size defines the invisible detection rectangle.
+## entity_size defines the invisible detection rectangle.
 @tool
 class_name RoomExit
 extends BasePlaceable
@@ -19,15 +19,9 @@ extends BasePlaceable
 		exit_direction = value
 		update_configuration_warnings()
 
-@export_group("Exit Zone")
-@export var exit_size: Vector2 = Vector2(16, 200):
-	set(value):
-		exit_size = value
-		entity_size = exit_size
-
 
 func _init() -> void:
-	entity_size = Vector2(16, 200)
+	entity_size = Vector2(16, 100)
 	base_color = Color(0.2, 0.8, 0.2, 0.15)
 
 
@@ -37,7 +31,7 @@ func _runtime_ready() -> void:
 
 ## Check if an actor overlaps this exit zone.
 func is_actor_in_zone(actor_pos: Vector2, actor_size: Vector2) -> bool:
-	var my_rect := Rect2(global_position - exit_size / 2.0, exit_size)
+	var my_rect := Rect2(global_position - entity_size / 2.0, entity_size)
 	var actor_rect := Rect2(actor_pos - actor_size / 2.0, actor_size)
 	return my_rect.intersects(actor_rect)
 
@@ -56,9 +50,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _draw() -> void:
 	if not Engine.is_editor_hint():
 		return
-	var hw := exit_size.x / 2.0
-	var hh := exit_size.y / 2.0
-	var rect := Rect2(Vector2(-hw, -hh), exit_size)
+	var hw := entity_size.x / 2.0
+	var hh := entity_size.y / 2.0
+	var rect := Rect2(Vector2(-hw, -hh), entity_size)
 	# Green dashed outline for the detection zone
 	var color := Color(0.2, 0.9, 0.2, 0.5)
 	draw_rect(rect, color, false, 1.5)

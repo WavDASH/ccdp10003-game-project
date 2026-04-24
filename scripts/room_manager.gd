@@ -120,3 +120,17 @@ func get_room_bounds() -> Rect2:
 		if bounds is Rect2:
 			return bounds
 	return Rect2(0, 0, 960, 640)
+
+
+## Returns per-room camera config dictionary from the current room.
+## Falls back to sensible defaults if the room has no get_camera_config().
+func get_camera_config() -> Dictionary:
+	if current_room_node and current_room_node.has_method("get_camera_config"):
+		return current_room_node.get_camera_config()
+	var bounds := get_room_bounds()
+	return {
+		"zoom": Vector2(1, 1),
+		"limits": bounds,
+		"smoothing": true,
+		"smoothing_speed": 8.0,
+	}

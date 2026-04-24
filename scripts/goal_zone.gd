@@ -7,14 +7,14 @@ class_name GoalZone
 extends BasePlaceable
 
 @export_group("Goal")
-@export var zone_size: Vector2 = Vector2(180, 28):
+@export var zone_size: Vector2 = Vector2(100, 28):
 	set(value):
 		zone_size = value
 		entity_size = zone_size
 
 
 func _init() -> void:
-	entity_size = Vector2(180, 28)
+	entity_size = Vector2(100, 28)
 	base_color = Color(1.0, 0.92, 0.2, 0.2)
 
 

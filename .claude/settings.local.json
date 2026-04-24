@@ -13,7 +13,11 @@
       "Bash(grep -l \"class_name\" /c/Users/alexw/Documents/VSC/projects/game2_claude/scripts/*.gd)",
       "Bash(xargs grep:*)",
       "Bash(grep -n \"func _draw\\\\|func _get_configuration_warnings\" \"c:/Users/alexw/Documents/VSC/projects/game2_claude/scripts\"/*.gd)",
-      "Bash(grep -n \"extends\\\\|_sync_size\\\\|_sync_placeholder_visual\\\\|_sync_visuals\\\\|_sync_door_body\\\\|_sync_one_way\" \"c:/Users/alexw/Documents/VSC/projects/game2_claude/scripts\"/*.gd)"
+      "Bash(grep -n \"extends\\\\|_sync_size\\\\|_sync_placeholder_visual\\\\|_sync_visuals\\\\|_sync_door_body\\\\|_sync_one_way\" \"c:/Users/alexw/Documents/VSC/projects/game2_claude/scripts\"/*.gd)",
+      "Bash(grep -E \"^shape = \" /c/Users/alexw/Documents/VSC/projects/game2_claude/scenes/*.tscn)",
+      "Bash(grep -n \"latching\" scripts/*.gd scenes/rooms/*.tscn)",
+      "Bash(grep -n \"_has_custom_size = true\" scripts/*.gd)",
+      "Bash(grep -n \"room_bounds\\\\|Camera\\\\|zoom\\\\|viewport\" /c/Users/alexw/Documents/VSC/projects/game2_claude/scenes/rooms/*.tscn)"
     ]
   }
 }

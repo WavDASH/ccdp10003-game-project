@@ -28,6 +28,7 @@ extends TimeScheduledReceiver
 
 var _door_body: StaticBody2D = null
 var _door_shape: CollisionShape2D = null   # direct ref — no name lookup
+var _shape_made_unique: bool = false
 
 
 func _init() -> void:
@@ -84,6 +85,9 @@ func _sync_door_body() -> void:
 	if _door_body and _door_shape == null:
 		_find_door_shape()
 	if _door_shape and _door_shape.shape is RectangleShape2D:
+		if not _shape_made_unique:
+			_door_shape.shape = _door_shape.shape.duplicate()
+			_shape_made_unique = true
 		_door_shape.shape.size = door_size
 
 

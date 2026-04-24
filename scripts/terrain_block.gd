@@ -101,10 +101,15 @@ func _ensure_children() -> void:
 			vis.owner = get_tree().edited_scene_root
 
 
+var _shape_made_unique: bool = false
+
 func _sync_visuals() -> void:
-	# Sync collision shape
+	# Sync collision shape — duplicate once so instances don't share the resource.
 	var cs = get_node_or_null("CollisionShape2D")
 	if cs and cs.shape is RectangleShape2D:
+		if not _shape_made_unique:
+			cs.shape = cs.shape.duplicate()
+			_shape_made_unique = true
 		cs.shape.size = block_size
 
 	# Sync placeholder visual (Polygon2D only — safe no-op for Sprite2D etc.)

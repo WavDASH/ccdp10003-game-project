@@ -8,10 +8,10 @@ Practical reference for building and editing rooms in the Godot 4.6 editor.
 
 ## Quick Start: Adding a New Room
 
-1. **Duplicate** an existing room scene (e.g. `scenes/rooms/room_01.tscn`).
-2. **Rename** it to `room_XX.tscn` in the `scenes/rooms/` folder.
-3. **Edit** the Background polygon and Geometry nodes for your room layout.
-4. **Add** a `PlayerSpawn` Marker2D in the `player_spawn` group.
+1. **Duplicate** `scenes/rooms/room_template.tscn` and rename it to `room_XX.tscn`.
+2. **Change `room_bounds`** in the Inspector to your desired room size (e.g. `Rect2(0, 0, 1920, 640)` for a double-wide room). The shell walls, ceiling, floor, and background update automatically.
+3. **Add** puzzle content under the **Geometry** node (terrain, platforms, etc.).
+4. **Position** the `PlayerSpawn` marker where the player should start.
 5. **Add** entry Marker2D(s) in the `room_entries` group (e.g. `EntryLeft`, `EntryRight`).
 6. **Register** the room in `main.gd`'s room registry:
    ```gdscript
@@ -19,11 +19,67 @@ Practical reference for building and editing rooms in the Godot 4.6 editor.
    ```
 7. **Wire exits** — place RoomExit instances that point to the new room (set `target_room` and `target_entry`).
 
+### Room structure
+
+The template uses a two-layer geometry approach:
+
+- **RoomShell** — auto-synced boundary walls (Floor, Ceiling, WallLeft, WallRight). These resize and reposition automatically when you change `room_bounds` or `wall_thickness` in the Inspector.
+- **Geometry** — manually placed level content (platforms, obstacles, extra walls). NOT affected by room_bounds changes.
+- **Background** — Polygon2D that auto-resizes with room_bounds.
+
 ### Room conventions
-- All rooms are **960x640** pixels.
-- Background: a Polygon2D filling the room, dark color (~0.12, 0.16, 0.22).
-- Walls/floor/ceiling: TerrainBlock StaticBody2D nodes in a "Geometry" container.
-- Player spawn / entries / exits: Marker2D / RoomExit nodes in dedicated containers.
+- Default size: **960x640** pixels (one viewport). Change via `room_bounds`.
+- `wall_thickness`: default 32px. Applies to all four shell walls.
+- Player spawn / entries / exits: Marker2D / RoomExit nodes in dedicated containers — positioned manually.
+
+---
+
+## Per-Room Camera Settings
+
+Each room can configure its own camera behavior via exports in the Inspector under the **Camera** group on the room root node.
+
+### Camera Mode
+
+| Mode | Behavior |
+|---|---|
+| `FOLLOW` (default) | Camera follows the player, clamped to room bounds. Zoom 1:1. Standard for rooms that are viewport-sized or larger. |
+| `FIT_ROOM` | Camera zooms out to show the entire room at once. Good for large puzzle rooms where the player needs to see everything. Zoom is auto-calculated from room_bounds vs viewport (960x640). |
+| `CUSTOM` | Camera follows the player with a custom zoom level and optional custom bounds. Use for tighter or wider framing. |
+
+### Camera Properties
+
+| Property | Default | Purpose |
+|---|---|---|
+| `camera_mode` | FOLLOW | Which camera behavior to use |
+| `camera_zoom` | (1, 1) | Zoom override (CUSTOM mode only). `(2, 2)` = 2x zoom in, `(0.5, 0.5)` = 2x zoom out |
+| `camera_bounds` | (empty) | Camera movement bounds (CUSTOM mode only). Leave at zero-size to use room_bounds |
+| `camera_smoothing_enabled` | true | Whether camera smoothly follows or snaps to player |
+| `camera_smoothing_speed` | 8.0 | How fast the camera catches up (higher = snappier) |
+
+### Examples
+
+**Standard room (960x640):** Leave everything at defaults. Camera follows player at 1:1 zoom.
+
+**Large room with full overview:** Set `camera_mode = FIT_ROOM`. A 1920x1280 room auto-calculates zoom to 0.5x so the whole room is visible.
+
+**Tight follow camera:** Set `camera_mode = CUSTOM`, `camera_zoom = (1.5, 1.5)`. Camera follows player zoomed in 50%.
+
+**Custom camera bounds:** Set `camera_mode = CUSTOM`, `camera_bounds = Rect2(100, 0, 760, 640)`. Camera only pans within the specified rectangle (useful for keeping important areas visible).
+
+**No smoothing (instant snap):** Set `camera_smoothing_enabled = false` on any mode.
+
+### Room transitions
+
+When the player enters a new room, the destination room's camera settings are applied automatically. The camera zoom, limits, and smoothing update instantly on room load.
+
+### Editor overlay
+
+The room bounds overlay shows the current camera mode and effective zoom:
+- `cam=FOLLOW` — standard follow camera
+- `cam=FIT_ROOM (0.50x)` — shows calculated zoom factor
+- `cam=CUSTOM (1.50x)` — shows custom zoom factor
+
+In CUSTOM mode with explicit camera_bounds, a yellow rectangle shows the camera movement area.
 
 ---
 
@@ -97,7 +153,7 @@ When `trigger_size` differs from `visual_size`, a dashed cyan outline shows the 
 | `door_size` | Width x height — **primary size control** |
 | `triggers` | Array of NodePaths to trigger nodes |
 | `require_all` | true = AND, false = OR |
-| `latching` | Once opened, stays open permanently |
+| `close_delay_ticks` | Frames to wait before closing after triggers lost (0 = instant) |
 | `closed_color` / `open_color` | Visual states |
 
 ### TimeScheduledDoor (time-driven door)
@@ -143,6 +199,29 @@ A green line + ghost rectangle shows the travel path in the editor.
 |---|---|
 | `zone_size` | Width x height |
 | `base_color` | Fill color (gold/transparent) |
+
+### TutorialHintZone (contextual tutorial hint)
+**Scene:** `scenes/tutorial_hint_zone.tscn`
+
+Drops a short hint label into the world that fades in when the player enters the zone and fades out when they leave. By default each hint appears once per game session.
+
+| Property | Purpose |
+|---|---|
+| `hint_text` | The text to display (supports line breaks) |
+| `zone_size` | Width x height of the trigger rectangle |
+| `show_once` | If true (default), hint appears only the first time per session |
+| `hint_id` | Stable id for the show-once registry. Falls back to node path if empty. Set this if you want the hint to survive a room-path rename |
+| `label_offset` | Position of the label relative to the zone center (negative Y = above) |
+| `font_size` | Label font size |
+| `fade_duration` | Fade in/out time in seconds |
+
+**Authoring:**
+1. Instance `scenes/tutorial_hint_zone.tscn` into a room.
+2. Position it at the moment the hint is relevant (e.g. near the first switch, or right before the puzzle's aha moment).
+3. Set `hint_text` and adjust `zone_size` so the zone covers the player's path.
+4. Group multiple zones under a `Tutorial` Node2D for tidy scene hierarchy.
+
+**Resetting shown hints:** Call `TutorialHintZone.reset_shown()` from any script if you want all hints to re-trigger (e.g. for a "replay tutorial" option).
 
 ### RoomExit (room transition trigger)
 **Scene:** `scenes/room_exit.tscn`

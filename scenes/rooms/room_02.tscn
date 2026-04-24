@@ -2,28 +2,23 @@
 
 [ext_resource type="Script" uid="uid://ccfw2l5wuow58" path="res://scripts/base_room.gd" id="0_room"]
 [ext_resource type="Script" uid="uid://cx43umte7ywmv" path="res://scripts/terrain_block.gd" id="2_terrain"]
-[ext_resource type="PackedScene" path="res://scenes/time_scheduled_door.tscn" id="3_sched_door"]
 [ext_resource type="PackedScene" path="res://scenes/timed_switch.tscn" id="4_tswitch"]
 [ext_resource type="PackedScene" path="res://scenes/moving_platform.tscn" id="5_mplat"]
-[ext_resource type="Script" uid="uid://hdlxganpae5w" path="res://scripts/goal_zone.gd" id="6_goal"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fnk50"]
-size = Vector2(960, 80)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwrrq"]
-size = Vector2(32, 640)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qd0q8"]
-size = Vector2(32, 640)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcnne"]
-size = Vector2(960, 32)
+[ext_resource type="PackedScene" path="res://scenes/terrain_block.tscn" id="6_0e81w"]
+[ext_resource type="PackedScene" path="res://scenes/goal_zone.tscn" id="6_vcnne"]
+[ext_resource type="PackedScene" path="res://scenes/tutorial_hint_zone.tscn" id="7_hint"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e81w"]
-size = Vector2(200, 24)
+size = Vector2(960, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5vp"]
-size = Vector2(200, 24)
+size = Vector2(32, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jk4q7"]
+size = Vector2(32, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckh05"]
+size = Vector2(960, 32)
 
 [node name="Room02" type="Node2D" unique_id=1878473665]
 script = ExtResource("0_room")
@@ -41,7 +36,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(960, 80)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Floor" unique_id=477460969]
-shape = SubResource("RectangleShape2D_fnk50")
+shape = SubResource("RectangleShape2D_0e81w")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/Floor" unique_id=1601398635]
 texture_repeat = 2
@@ -56,7 +51,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(32, 640)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallLeft" unique_id=981579393]
-shape = SubResource("RectangleShape2D_kwrrq")
+shape = SubResource("RectangleShape2D_8x5vp")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/WallLeft" unique_id=999408508]
 texture_repeat = 2
@@ -71,7 +66,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(32, 640)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallRight" unique_id=433982886]
-shape = SubResource("RectangleShape2D_qd0q8")
+shape = SubResource("RectangleShape2D_jk4q7")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/WallRight" unique_id=1368956108]
 texture_repeat = 2
@@ -86,7 +81,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(960, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ceiling" unique_id=1061711883]
-shape = SubResource("RectangleShape2D_vcnne")
+shape = SubResource("RectangleShape2D_ckh05")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/Ceiling" unique_id=423636461]
 texture_repeat = 2
@@ -94,63 +89,15 @@ color = Color(0.32, 0.32, 0.38, 1)
 polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
 uv = PackedVector2Array(0, 0, 960, 0, 960, 32, 0, 32)
 
-[node name="PlatformLow" type="StaticBody2D" parent="Geometry" unique_id=196153684]
-position = Vector2(211, 460)
-collision_mask = 0
-script = ExtResource("2_terrain")
-block_size = Vector2(200, 24)
-block_color = Color(0.38, 0.38, 0.44, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/PlatformLow" unique_id=1120313068]
-shape = SubResource("RectangleShape2D_0e81w")
-
-[node name="Visual" type="Polygon2D" parent="Geometry/PlatformLow" unique_id=619851356]
-texture_repeat = 2
-color = Color(0.38, 0.38, 0.44, 1)
-polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
-uv = PackedVector2Array(0, 0, 200, 0, 200, 24, 0, 24)
-
-[node name="PlatformHigh" type="StaticBody2D" parent="Geometry" unique_id=1562302169]
-position = Vector2(818, 170)
-collision_mask = 0
-script = ExtResource("2_terrain")
-block_size = Vector2(200, 24)
-block_color = Color(0.38, 0.38, 0.44, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/PlatformHigh" unique_id=1082264900]
-shape = SubResource("RectangleShape2D_8x5vp")
-
-[node name="Visual" type="Polygon2D" parent="Geometry/PlatformHigh" unique_id=1859636231]
-texture_repeat = 2
-color = Color(0.38, 0.38, 0.44, 1)
-polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
-uv = PackedVector2Array(0, 0, 200, 0, 200, 24, 0, 24)
-
-[node name="PlatformLow2" type="StaticBody2D" parent="Geometry" unique_id=1895636455]
-position = Vector2(211, 233)
-collision_mask = 0
-script = ExtResource("2_terrain")
-block_size = Vector2(200, 24)
-block_color = Color(0.38, 0.38, 0.44, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/PlatformLow2" unique_id=1084446564]
-shape = SubResource("RectangleShape2D_0e81w")
-
-[node name="Visual" type="Polygon2D" parent="Geometry/PlatformLow2" unique_id=1581654533]
-texture_repeat = 2
-color = Color(0.38, 0.38, 0.44, 1)
-polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
-uv = PackedVector2Array(0, 0, 200, 0, 200, 24, 0, 24)
-
 [node name="Spawns" type="Node2D" parent="." unique_id=1714930184]
 
 [node name="PlayerSpawn" type="Marker2D" parent="Spawns" unique_id=144847615 groups=["player_spawn"]]
-position = Vector2(818, 518)
+position = Vector2(890, 512)
 
 [node name="Entries" type="Node2D" parent="." unique_id=1876535103]
 
 [node name="EntryRight" type="Marker2D" parent="Entries" unique_id=1321892645 groups=["room_entries"]]
-position = Vector2(821, 518)
+position = Vector2(890, 512)
 
 [node name="EntryLeft" type="Marker2D" parent="Entries" unique_id=1869264852 groups=["room_entries"]]
 position = Vector2(60, 520)
@@ -159,33 +106,25 @@ position = Vector2(60, 520)
 
 [node name="Mechanisms" type="Node2D" parent="." unique_id=494433300]
 
-[node name="ScheduledDoor" parent="Mechanisms" unique_id=1887887776 instance=ExtResource("3_sched_door")]
-position = Vector2(381, 387)
-schedule = Array[Vector2i]([Vector2i(60, 2147483647)])
-
-[node name="TimedSwitch" parent="Mechanisms" unique_id=204877443 instance=ExtResource("4_tswitch")]
-position = Vector2(211, 216)
-hold_ticks = 60
-
 [node name="Elevator" parent="Mechanisms" unique_id=39371720 instance=ExtResource("5_mplat")]
-position = Vector2(544, 542)
+position = Vector2(427, 88)
 sync_to_physics = false
-point_b = Vector2(0, -300)
+point_b = Vector2(0, 200)
 triggers = Array[NodePath]([NodePath("../TimedSwitch")])
 
-[node name="Goal" type="Node2D" parent="Mechanisms" unique_id=117757426]
-position = Vector2(817, 145)
-script = ExtResource("6_goal")
-zone_size = Vector2(160, 28)
-entity_size = Vector2(160, 28)
-base_color = Color(1, 0.92, 0.2, 0.2)
+[node name="TimedSwitch" parent="Mechanisms" unique_id=204877443 instance=ExtResource("4_tswitch")]
+position = Vector2(431, 554)
+hold_ticks = 0
 
-[node name="Visual" type="Polygon2D" parent="Mechanisms/Goal" unique_id=1994165017]
-texture_repeat = 2
-position = Vector2(1, -2)
-color = Color(1, 0.92, 0.2, 0.2)
-polygon = PackedVector2Array(-80, -14, 80, -14, 80, 14, -80, 14)
-uv = PackedVector2Array(0, 0, 160, 0, 160, 28, 0, 28)
+[node name="Elevator2" parent="Mechanisms" unique_id=1871397691 instance=ExtResource("5_mplat")]
+position = Vector2(635, 86)
+sync_to_physics = false
+point_b = Vector2(0, 200)
+triggers = Array[NodePath]([NodePath("../TimedSwitch2")])
+
+[node name="TimedSwitch2" parent="Mechanisms" unique_id=358979803 instance=ExtResource("4_tswitch")]
+position = Vector2(640, 554)
+hold_ticks = 0
 
 [node name="Labels" type="Node2D" parent="." unique_id=4977762]
 
@@ -196,27 +135,93 @@ theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 0.6)
 theme_override_font_sizes/font_size = 18
 text = "ROOM 02"
 
-[node name="LblSwitch" type="Label" parent="Labels" unique_id=1166289098]
-offset_left = 149.0
-offset_top = 180.0
-offset_right = 253.0
-offset_bottom = 193.0
-theme_override_colors/font_color = Color(0.1, 0.6, 0.7, 0.5)
-theme_override_font_sizes/font_size = 9
-text = "TIMED SWITCH (1s hold)"
-
 [node name="LblElevator" type="Label" parent="Labels" unique_id=1666909231]
-offset_left = 561.0
-offset_top = 515.0
-offset_right = 606.0
-offset_bottom = 528.0
+offset_left = 511.0
+offset_top = 521.0
+offset_right = 556.0
+offset_bottom = 534.0
 theme_override_colors/font_color = Color(0.3, 0.7, 0.3, 0.5)
 theme_override_font_sizes/font_size = 9
 text = "ELEVATOR"
 
-[node name="LblHint" type="Label" parent="Labels" unique_id=1331846856]
-offset_left = 340.0
-offset_top = 600.0
-theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 0.3)
-theme_override_font_sizes/font_size = 9
-text = "Hint: You need an echo to hold the switch while you ride the elevator"
+[node name="TerrainBlock" parent="." unique_id=238122421 instance=ExtResource("6_0e81w")]
+position = Vector2(854, 149)
+block_size = Vector2(150, 32)
+
+[node name="TerrainBlock2" parent="." unique_id=562917898 instance=ExtResource("6_0e81w")]
+position = Vector2(170, 291)
+
+[node name="GoalZone" parent="." unique_id=2087539764 instance=ExtResource("6_vcnne")]
+position = Vector2(875, 116)
+entity_size = Vector2(100, 28)
+base_color = Color(1, 0.92, 0.2, 0.2)
+
+[node name="Tutorial" type="Node2D" parent="." unique_id=1308292667]
+
+[node name="HintIntro" parent="Tutorial" unique_id=1132431020 instance=ExtResource("7_hint")]
+position = Vector2(820, 500)
+hint_text = "Reach the golden goal above."
+zone_size = Vector2(180, 140)
+hint_id = "r2_intro"
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintIntro" unique_id=1817350501]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = 567.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "Reach the golden goal above."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HintElevator" parent="Tutorial" unique_id=1105845135 instance=ExtResource("7_hint")]
+position = Vector2(430, 490)
+hint_text = "The switch calls the elevator down — but it rises back up when released."
+zone_size = Vector2(200, 130)
+hint_id = "r2_elevator"
+label_offset = Vector2(0, -90)
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintElevator" unique_id=2017530332]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = 1467.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "The switch calls the elevator down — but it rises back up when released."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HintReverse" parent="Tutorial" unique_id=721956350 instance=ExtResource("7_hint")]
+position = Vector2(630, 482)
+hint_text = "You can't ride the elevator AND hold the switch.
+Press R — your echo will hold the switch while you ride."
+zone_size = Vector2(200, 160)
+hint_id = "r2_reverse"
+label_offset = Vector2(0, -100)
+font_size = 15
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintReverse" unique_id=1570703294]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = 2159.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "You can't ride the elevator AND hold the switch.
+Press R — your echo will hold the switch while you ride."
+horizontal_alignment = 1
+autowrap_mode = 3

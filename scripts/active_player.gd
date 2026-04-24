@@ -18,7 +18,7 @@ enum State { NORMAL, DASH, WALL_JUMP_LOCK }
 # ─── Tunable parameters ─────────────────────────────────────────────
 
 @export_group("Horizontal Movement")
-@export var max_speed: float = 280.0
+@export var max_speed: float = 300.0
 ## Acceleration when grounded with directional input (~5 frames to max).
 @export var ground_accel: float = 3800.0
 ## Deceleration when grounded with no input (~4 frames to stop).

@@ -126,9 +126,18 @@ Systems like MovingPlatform don't directly check the player — they read trigge
 `MechanismTrigger` and `MechanismReceiver` are base classes designed for extension:
 
 - **Trigger** (`mechanism_trigger.gd`): Has a rectangular zone. TimelineManager queries actor overlap each frame and calls `set_pressed()`. Override `_on_state_change()` for visual feedback.
-- **Receiver** (`mechanism_receiver.gd`): References one or more triggers. Supports `require_all` (AND) or any (OR) logic. Supports `latching` (stays open once triggered). Override `_on_state_change()` for behaviour.
+- **Receiver** (`mechanism_receiver.gd`): References one or more triggers. Supports `require_all` (AND) or any (OR) logic. Supports `close_delay_ticks` (grace period before closing after triggers are lost). Override `_on_state_change()` for behaviour. **Records state transitions during forward play and replays them during reverse** — doors never re-derive state from live trigger evaluation during reverse.
 
 MVP implements `SwitchTrigger` (pressure plate) and `DoorReceiver` (blocking gate). Future types (timed switches, moving platforms, laser emitters) subclass the same base.
+
+### Receiver reverse-replay contract
+
+During **forward play**, `evaluate_triggers()` evaluates live trigger states, applies `close_delay_ticks` logic, and records every open/close transition in `_state_log` at the current `room_tick`.
+
+During **reverse play**, `evaluate_triggers()` skips live evaluation entirely. Instead it looks up the correct state from the recorded log for the current `room_tick` and applies it. This means:
+- Close-delay timing is baked into the log (the close event records at the tick it actually fires, not when triggers were lost)
+- After a reversal, log entries beyond the current `room_tick` are trimmed so a new forward pass can produce different events
+- Switches still evaluate during reverse (for visual feedback), but their state does not drive door logic during reverse
 
 ---
 
@@ -174,6 +183,28 @@ Levels are built as **room scenes** in `scenes/rooms/`. Each room is a standalon
 - `scenes/rooms/room_template.tscn` — Starter room template (duplicate to create new rooms)
 - `scenes/*.tscn` — Reusable component scenes (switch, door, hazard, etc.)
 - `templates/*.tscn` — Starting-point templates for creating new entity types
+
+---
+
+## Room-Shell Auto-Sync
+
+`base_room.gd` provides automatic room-shell sizing. When `room_bounds` or `wall_thickness` is changed in the Inspector, all room-shell geometry updates automatically.
+
+**Opt-in:** the room must have a child node named `RoomShell`. Without it, nothing is auto-synced (existing rooms are untouched).
+
+**What auto-syncs:**
+- `RoomShell/Floor` — repositioned + resized to span the bottom edge
+- `RoomShell/Ceiling` — repositioned + resized to span the top edge
+- `RoomShell/WallLeft` — repositioned + resized to span the left edge
+- `RoomShell/WallRight` — repositioned + resized to span the right edge
+- `Background` (Polygon2D) — polygon corners, position, and scale reset to match bounds
+
+**What does NOT auto-sync:**
+- Nodes under `Geometry`, `Mechanisms`, `Hazards`, or any other container
+- PlayerSpawn, entries, exits (positioned manually)
+- Any TerrainBlock not under the `RoomShell` container
+
+**Workflow:** Duplicate `room_template.tscn` → change `room_bounds` → shell updates → build content under `Geometry`.
 
 ---
 
@@ -240,7 +271,7 @@ All size-bearing components (BasePlaceable subclasses and TerrainBlock) expose a
 | `open_color` | Faded color when open (alpha ~0.1) | |
 | `triggers` | Array of NodePaths to trigger nodes | Wire to SwitchTrigger(s) |
 | `require_all` | true = AND logic, false = OR logic | Multi-switch puzzles |
-| `latching` | Once opened, stays open permanently | One-time gates |
+| `close_delay_ticks` | Frames to wait before closing after triggers lost (0 = instant) | 120 = 2s grace period |
 
 ---
 
@@ -339,6 +370,8 @@ All size-bearing components (BasePlaceable subclasses and TerrainBlock) expose a
 | `warning_color` | Flash color during crumble countdown | |
 
 **Flashes** between `crumble_color` and `warning_color` during countdown, then fades to near-transparent when broken. Respects reverse-mode rule: reverse player doesn't trigger crumble.
+
+**Timeline replay:** State transitions (SOLID → CRUMBLING → BROKEN → SOLID) are recorded at their room_tick during forward play. During reverse, the block replays this history backward — it "un-breaks" when room_tick rewinds past the break point. After a reversal, future log entries are trimmed so the new forward pass can produce different events.
 
 ---
 

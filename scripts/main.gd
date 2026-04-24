@@ -16,6 +16,7 @@ const TINT_REVERSE := Color(0.04, 0.1, 0.55, 0.14)
 const ROOM_REGISTRY := {
 	"room_01": "res://scenes/rooms/room_01.tscn",
 	"room_02": "res://scenes/rooms/room_02.tscn",
+	"room_03": "res://scenes/rooms/room_03.tscn",
 }
 
 const START_ROOM := "room_01"
@@ -176,14 +177,18 @@ func _on_room_changed(room_id: String) -> void:
 	flash_rect.color.a = 0.0
 	if hud_node:
 		hud_node.hide_level_complete()
-	# Snap camera limits to room bounds.
+	# Apply per-room camera settings.
 	var cam: Camera2D = active_player.get_node_or_null("Camera2D")
 	if cam:
-		var bounds: Rect2 = room_manager.get_room_bounds()
-		cam.limit_left = int(bounds.position.x)
-		cam.limit_top = int(bounds.position.y)
-		cam.limit_right = int(bounds.end.x)
-		cam.limit_bottom = int(bounds.end.y)
+		var cfg: Dictionary = room_manager.get_camera_config()
+		var limits: Rect2 = cfg.get("limits", Rect2(0, 0, 960, 640))
+		cam.limit_left = int(limits.position.x)
+		cam.limit_top = int(limits.position.y)
+		cam.limit_right = int(limits.end.x)
+		cam.limit_bottom = int(limits.end.y)
+		cam.zoom = cfg.get("zoom", Vector2(1, 1))
+		cam.position_smoothing_enabled = cfg.get("smoothing", true)
+		cam.position_smoothing_speed = cfg.get("smoothing_speed", 8.0)
 
 
 func _on_spawn_found(spawn_pos: Vector2) -> void:

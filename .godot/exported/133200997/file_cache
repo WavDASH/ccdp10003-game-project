@@ -1,5 +1,5 @@
-res://scenes/rooms/room_01.tscn::f4a1272ffc37b19f49ba5284ab7a6d51::1775846394::res://.godot/exported/133200997/export-509333161f30e886bffab9bccea69b4f-room_01.scn
-res://scenes/rooms/room_02.tscn::26410b54411076bd1fc9f448bb2359f3::1775893538::res://.godot/exported/133200997/export-a40bb7b55e46f6cf070cf7624eb2a0b4-room_02.scn
+res://scenes/rooms/room_01.tscn::82b034f085301c5ca675645856390893::1776088449::res://.godot/exported/133200997/export-509333161f30e886bffab9bccea69b4f-room_01.scn
+res://scenes/rooms/room_02.tscn::616f41b5ff7d8436241ad8a5aa4b83c6::1776095800::res://.godot/exported/133200997/export-a40bb7b55e46f6cf070cf7624eb2a0b4-room_02.scn
 res://scenes/crumble_block.tscn::54eff241fca793f9c2ddfa58a37d08fb::1775813802::res://.godot/exported/133200997/export-981ada5edd58a8705c6142273603b105-crumble_block.scn
 res://scenes/door.tscn::8638795a54ae4b859742d04406f579b8::1775807330::res://.godot/exported/133200997/export-3370694a3d56567dea5c3bf0058a536d-door.scn
 res://scenes/echo_player.tscn::a6b798e152b5ad7063eafdd1d892e6a6::1775892493::res://.godot/exported/133200997/export-e449ab8e5bb40cd68e752effc08cdc3e-echo_player.scn
@@ -8,7 +8,7 @@ res://scenes/hazard.tscn::2ce03a640e2cca9124c211e092bcb855::1775743640::res://.g
 res://scenes/main.tscn::18b41fe48333f78f9f050ad6d6589302::1775743727::res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
 res://scenes/moving_platform.tscn::58382967ff05ab4469eb34bd43a746ea::1775812413::res://.godot/exported/133200997/export-f4272c60ccbaad2634497cd720aa7d56-moving_platform.scn
 res://scenes/player.tscn::7261ccf119f0073924a2caa9f33dd613::1775809721::res://.godot/exported/133200997/export-234fb6894ec6226e856ab7f825500d3d-player.scn
-res://scenes/room_exit.tscn::426b04717b93305e90c7f15a6da84d52::1775810003::res://.godot/exported/133200997/export-f1f659bda1195df72ee3298a8e0a8b25-room_exit.scn
+res://scenes/room_exit.tscn::30de7b783e72eff61342342beba6a849::1776086348::res://.godot/exported/133200997/export-f1f659bda1195df72ee3298a8e0a8b25-room_exit.scn
 res://scenes/switch.tscn::d600571434bfd926611a2528fcf9f8ea::1775743634::res://.godot/exported/133200997/export-7d7682dd9205a180ef2afa6af5fa7410-switch.scn
 res://scenes/terrain_block.tscn::7394ad549fd21d13e51b3caef088e7e3::1775805356::res://.godot/exported/133200997/export-b4ddc76c300f13a85b16e13b793c392d-terrain_block.scn
 res://scenes/timed_switch.tscn::cebc7d05843fea3d40537a9f0bc70820::1775812372::res://.godot/exported/133200997/export-5932b1f192379d5c3e4f5930d3c96227-timed_switch.scn
