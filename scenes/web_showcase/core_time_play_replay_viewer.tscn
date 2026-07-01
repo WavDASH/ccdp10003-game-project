@@ -1,0 +1,232 @@
+[gd_scene load_steps=2 format=3 uid="uid://crwreplayviewer1"]
+
+[ext_resource type="Script" path="res://scripts/web_showcase/showcase_replay_viewer.gd" id="1_viewer"]
+
+[node name="ReplayViewer" type="Node2D"]
+script = ExtResource("1_viewer")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.1, 0.11, 0.15, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+
+[node name="ScreenTint" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.8, 0.45, 0.2, 0.04)
+mouse_filter = 2
+
+[node name="Room" type="Node2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="Room"]
+color = Color(0.3, 0.3, 0.36, 1)
+polygon = PackedVector2Array(0, 688, 1280, 688, 1280, 720, 0, 720)
+
+[node name="Ceiling" type="Polygon2D" parent="Room"]
+color = Color(0.3, 0.3, 0.36, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 32, 0, 32)
+
+[node name="WallLeft" type="Polygon2D" parent="Room"]
+color = Color(0.3, 0.3, 0.36, 1)
+polygon = PackedVector2Array(0, 0, 32, 0, 32, 720, 0, 720)
+
+[node name="WallRight" type="Polygon2D" parent="Room"]
+color = Color(0.3, 0.3, 0.36, 1)
+polygon = PackedVector2Array(1248, 0, 1280, 0, 1280, 720, 1248, 720)
+
+[node name="SwitchAVisual" type="Node2D" parent="Room"]
+position = Vector2(420, 668)
+
+[node name="Plate" type="Polygon2D" parent="Room/SwitchAVisual"]
+color = Color(0.6, 0.55, 0, 1)
+polygon = PackedVector2Array(-32, -6, 32, -6, 32, 6, -32, 6)
+
+[node name="Label" type="Label" parent="Room/SwitchAVisual"]
+offset_left = -28.0
+offset_top = -36.0
+offset_right = 60.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.3, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "Switch A"
+
+[node name="SwitchBVisual" type="Node2D" parent="Room"]
+position = Vector2(900, 668)
+
+[node name="Plate" type="Polygon2D" parent="Room/SwitchBVisual"]
+color = Color(0.6, 0.55, 0, 1)
+polygon = PackedVector2Array(-32, -6, 32, -6, 32, 6, -32, 6)
+
+[node name="Label" type="Label" parent="Room/SwitchBVisual"]
+offset_left = -28.0
+offset_top = -36.0
+offset_right = 60.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.3, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "Switch B"
+
+[node name="DoorVisual" type="Node2D" parent="Room"]
+position = Vector2(1140, 600)
+
+[node name="Body" type="Polygon2D" parent="Room/DoorVisual"]
+color = Color(0.6, 0.35, 0.15, 1)
+polygon = PackedVector2Array(-24, -100, 24, -100, 24, 100, -24, 100)
+
+[node name="Label" type="Label" parent="Room/DoorVisual"]
+offset_left = -22.0
+offset_top = -130.0
+offset_right = 60.0
+offset_bottom = -110.0
+theme_override_colors/font_color = Color(1, 0.7, 0.3, 0.9)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "Door"
+
+[node name="EchoVisual" type="Node2D" parent="Room"]
+visible = false
+
+[node name="Body" type="Polygon2D" parent="Room/EchoVisual"]
+color = Color(0.55, 0.75, 1, 0.55)
+polygon = PackedVector2Array(-12, -24, 12, -24, 12, 24, -12, 24)
+
+[node name="Outline" type="Line2D" parent="Room/EchoVisual"]
+default_color = Color(0.7, 0.85, 1, 0.5)
+points = PackedVector2Array(-12, -24, 12, -24, 12, 24, -12, 24, -12, -24)
+width = 1.5
+
+[node name="Label" type="Label" parent="Room/EchoVisual"]
+offset_left = -16.0
+offset_top = -50.0
+offset_right = 40.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.95)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "Echo"
+
+[node name="PlayerVisual" type="Node2D" parent="Room"]
+
+[node name="Body" type="Polygon2D" parent="Room/PlayerVisual"]
+color = Color(0.95, 0.95, 1, 1)
+polygon = PackedVector2Array(-12, -24, 12, -24, 12, 24, -12, 24)
+
+[node name="Label" type="Label" parent="Room/PlayerVisual"]
+offset_left = -28.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = -34.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "Current Self"
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TitleLabel" type="Label" parent="UI"]
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 700.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+text = "Core Time Mechanic"
+
+[node name="CaptionLabel" type="Label" parent="UI"]
+offset_left = 32.0
+offset_top = 56.0
+offset_right = 1248.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = ""
+autowrap_mode = 2
+
+[node name="BottomBar" type="Control" parent="UI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -100.0
+offset_right = -32.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarkerStrip" type="Control" parent="UI/BottomBar"]
+offset_right = 1216.0
+offset_bottom = 18.0
+
+[node name="TimelineSlider" type="HSlider" parent="UI/BottomBar"]
+offset_top = 22.0
+offset_right = 1216.0
+offset_bottom = 44.0
+min_value = 0.0
+max_value = 1.0
+step = 0.001
+
+[node name="Buttons" type="HBoxContainer" parent="UI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -48.0
+offset_right = -32.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="PlayPauseButton" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(110, 0)
+text = "▶ Play"
+
+[node name="ReverseButton" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(110, 0)
+text = "⏪ Reverse"
+
+[node name="RestartButton" type="Button" parent="UI/Buttons"]
+custom_minimum_size = Vector2(110, 0)
+text = "↺ Restart"
+
+[node name="SpeedButton" type="OptionButton" parent="UI/Buttons"]
+custom_minimum_size = Vector2(80, 0)
+
+[node name="NoReplayOverlay" type="Label" parent="UI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -60.0
+offset_right = 240.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 18
+text = "No replay loaded."
+horizontal_alignment = 1
+vertical_alignment = 1

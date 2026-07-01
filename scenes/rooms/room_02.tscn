@@ -5,19 +5,19 @@
 [ext_resource type="PackedScene" path="res://scenes/timed_switch.tscn" id="4_tswitch"]
 [ext_resource type="PackedScene" path="res://scenes/moving_platform.tscn" id="5_mplat"]
 [ext_resource type="PackedScene" path="res://scenes/terrain_block.tscn" id="6_0e81w"]
-[ext_resource type="PackedScene" path="res://scenes/goal_zone.tscn" id="6_vcnne"]
-[ext_resource type="PackedScene" path="res://scenes/tutorial_hint_zone.tscn" id="7_hint"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e81w"]
-size = Vector2(960, 80)
+[ext_resource type="PackedScene" path="res://scenes/goal_zone.tscn" id="7_0e81w"]
+[ext_resource type="PackedScene" uid="uid://dlwlcdkxgpnmk" path="res://scenes/tutorial_hint_zone.tscn" id="7_hint"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5vp"]
-size = Vector2(32, 640)
+size = Vector2(960, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jk4q7"]
 size = Vector2(32, 640)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckh05"]
+size = Vector2(32, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd78y"]
 size = Vector2(960, 32)
 
 [node name="Room02" type="Node2D" unique_id=1878473665]
@@ -36,7 +36,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(960, 80)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Floor" unique_id=477460969]
-shape = SubResource("RectangleShape2D_0e81w")
+shape = SubResource("RectangleShape2D_8x5vp")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/Floor" unique_id=1601398635]
 texture_repeat = 2
@@ -51,7 +51,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(32, 640)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallLeft" unique_id=981579393]
-shape = SubResource("RectangleShape2D_8x5vp")
+shape = SubResource("RectangleShape2D_jk4q7")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/WallLeft" unique_id=999408508]
 texture_repeat = 2
@@ -66,7 +66,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(32, 640)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/WallRight" unique_id=433982886]
-shape = SubResource("RectangleShape2D_jk4q7")
+shape = SubResource("RectangleShape2D_ckh05")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/WallRight" unique_id=1368956108]
 texture_repeat = 2
@@ -81,7 +81,7 @@ script = ExtResource("2_terrain")
 block_size = Vector2(960, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Ceiling" unique_id=1061711883]
-shape = SubResource("RectangleShape2D_ckh05")
+shape = SubResource("RectangleShape2D_xd78y")
 
 [node name="Visual" type="Polygon2D" parent="Geometry/Ceiling" unique_id=423636461]
 texture_repeat = 2
@@ -113,7 +113,7 @@ point_b = Vector2(0, 200)
 triggers = Array[NodePath]([NodePath("../TimedSwitch")])
 
 [node name="TimedSwitch" parent="Mechanisms" unique_id=204877443 instance=ExtResource("4_tswitch")]
-position = Vector2(431, 554)
+position = Vector2(425, 554)
 hold_ticks = 0
 
 [node name="Elevator2" parent="Mechanisms" unique_id=1871397691 instance=ExtResource("5_mplat")]
@@ -123,7 +123,7 @@ point_b = Vector2(0, 200)
 triggers = Array[NodePath]([NodePath("../TimedSwitch2")])
 
 [node name="TimedSwitch2" parent="Mechanisms" unique_id=358979803 instance=ExtResource("4_tswitch")]
-position = Vector2(640, 554)
+position = Vector2(633, 552)
 hold_ticks = 0
 
 [node name="Labels" type="Node2D" parent="." unique_id=4977762]
@@ -136,10 +136,10 @@ theme_override_font_sizes/font_size = 18
 text = "ROOM 02"
 
 [node name="LblElevator" type="Label" parent="Labels" unique_id=1666909231]
-offset_left = 511.0
-offset_top = 521.0
-offset_right = 556.0
-offset_bottom = 534.0
+offset_left = 512.0
+offset_top = 80.0
+offset_right = 557.0
+offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.3, 0.7, 0.3, 0.5)
 theme_override_font_sizes/font_size = 9
 text = "ELEVATOR"
@@ -151,12 +151,8 @@ block_size = Vector2(150, 32)
 [node name="TerrainBlock2" parent="." unique_id=562917898 instance=ExtResource("6_0e81w")]
 position = Vector2(170, 291)
 
-[node name="GoalZone" parent="." unique_id=2087539764 instance=ExtResource("6_vcnne")]
-position = Vector2(875, 116)
-entity_size = Vector2(100, 28)
-base_color = Color(1, 0.92, 0.2, 0.2)
-
 [node name="Tutorial" type="Node2D" parent="." unique_id=1308292667]
+visible = false
 
 [node name="HintIntro" parent="Tutorial" unique_id=1132431020 instance=ExtResource("7_hint")]
 position = Vector2(820, 500)
@@ -170,7 +166,7 @@ custom_minimum_size = Vector2(320, 0)
 offset_left = -160.0
 offset_top = -80.0
 offset_right = 160.0
-offset_bottom = 567.0
+offset_bottom = -57.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
@@ -192,7 +188,7 @@ custom_minimum_size = Vector2(320, 0)
 offset_left = -160.0
 offset_top = -90.0
 offset_right = 160.0
-offset_bottom = 1467.0
+offset_bottom = -41.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
@@ -216,7 +212,7 @@ custom_minimum_size = Vector2(320, 0)
 offset_left = -160.0
 offset_top = -100.0
 offset_right = 160.0
-offset_bottom = 2159.0
+offset_bottom = -3.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
@@ -225,3 +221,8 @@ text = "You can't ride the elevator AND hold the switch.
 Press R — your echo will hold the switch while you ride."
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="GoalZone" parent="." unique_id=1376817881 instance=ExtResource("7_0e81w")]
+position = Vector2(854, 118)
+entity_size = Vector2(100, 28)
+base_color = Color(1, 0.92, 0.2, 0.2)

@@ -1,5 +1,5 @@
-res://scenes/rooms/room_01.tscn::82b034f085301c5ca675645856390893::1776088449::res://.godot/exported/133200997/export-509333161f30e886bffab9bccea69b4f-room_01.scn
-res://scenes/rooms/room_02.tscn::616f41b5ff7d8436241ad8a5aa4b83c6::1776095800::res://.godot/exported/133200997/export-a40bb7b55e46f6cf070cf7624eb2a0b4-room_02.scn
+res://scenes/rooms/room_01.tscn::4348a75ed750f07f9598dac1248d5465::1777305777::res://.godot/exported/133200997/export-509333161f30e886bffab9bccea69b4f-room_01.scn
+res://scenes/rooms/room_02.tscn::e2662bccd214d649da598ceef8aa8f1e::1777305831::res://.godot/exported/133200997/export-a40bb7b55e46f6cf070cf7624eb2a0b4-room_02.scn
 res://scenes/crumble_block.tscn::54eff241fca793f9c2ddfa58a37d08fb::1775813802::res://.godot/exported/133200997/export-981ada5edd58a8705c6142273603b105-crumble_block.scn
 res://scenes/door.tscn::8638795a54ae4b859742d04406f579b8::1775807330::res://.godot/exported/133200997/export-3370694a3d56567dea5c3bf0058a536d-door.scn
 res://scenes/echo_player.tscn::a6b798e152b5ad7063eafdd1d892e6a6::1775892493::res://.godot/exported/133200997/export-e449ab8e5bb40cd68e752effc08cdc3e-echo_player.scn
@@ -8,7 +8,7 @@ res://scenes/hazard.tscn::2ce03a640e2cca9124c211e092bcb855::1775743640::res://.g
 res://scenes/main.tscn::18b41fe48333f78f9f050ad6d6589302::1775743727::res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
 res://scenes/moving_platform.tscn::58382967ff05ab4469eb34bd43a746ea::1775812413::res://.godot/exported/133200997/export-f4272c60ccbaad2634497cd720aa7d56-moving_platform.scn
 res://scenes/player.tscn::7261ccf119f0073924a2caa9f33dd613::1775809721::res://.godot/exported/133200997/export-234fb6894ec6226e856ab7f825500d3d-player.scn
-res://scenes/room_exit.tscn::30de7b783e72eff61342342beba6a849::1776086348::res://.godot/exported/133200997/export-f1f659bda1195df72ee3298a8e0a8b25-room_exit.scn
+res://scenes/room_exit.tscn::6a9acf02f2b765bd0451a4ad1db724a0::1776236418::res://.godot/exported/133200997/export-f1f659bda1195df72ee3298a8e0a8b25-room_exit.scn
 res://scenes/switch.tscn::d600571434bfd926611a2528fcf9f8ea::1775743634::res://.godot/exported/133200997/export-7d7682dd9205a180ef2afa6af5fa7410-switch.scn
 res://scenes/terrain_block.tscn::7394ad549fd21d13e51b3caef088e7e3::1775805356::res://.godot/exported/133200997/export-b4ddc76c300f13a85b16e13b793c392d-terrain_block.scn
 res://scenes/timed_switch.tscn::cebc7d05843fea3d40537a9f0bc70820::1775812372::res://.godot/exported/133200997/export-5932b1f192379d5c3e4f5930d3c96227-timed_switch.scn
@@ -19,4 +19,10 @@ res://templates/mechanism_trigger.tscn::6aa892c9f1214d793e9e8ed4b1d15d00::177580
 res://templates/placeable.tscn::3eff86f708ab9ea573b59e99fadf392c::1775805460::res://.godot/exported/133200997/export-a81890b266157e56fef11de2a585f14d-placeable.scn
 res://templates/terrain_block.tscn::7394ad549fd21d13e51b3caef088e7e3::1775805467::res://.godot/exported/133200997/export-bb652dd3bf139cbb9f05946a5dfa7299-terrain_block.scn
 res://templates/time_aware_entity.tscn::7102d0b7bdd2a594cd8f6076a9dc7b05::1775822252::res://.godot/exported/133200997/export-2dfdbb647a1df6664ea34613194ddbc0-time_aware_entity.scn
-res://scenes/rooms/room_template.tscn::af164ab0ac08a87e6eec0ec0a17bb4d9::1775899808::res://.godot/exported/133200997/export-9e2016b7cc44e714fa9ad9d341c8c732-room_template.scn
+res://scenes/rooms/room_template.tscn::28babf64f6777135b1014436cbff8234::1776234145::res://.godot/exported/133200997/export-9e2016b7cc44e714fa9ad9d341c8c732-room_template.scn
+res://data/web_showcase/core_time_play_replay.tres::fa3c0ef11219cbae58683d74e35754b0::1777303623::res://.godot/exported/133200997/export-7483d67bd4ba9efcc2f16f931822cbb2-core_time_play_replay.res
+res://scenes/rooms/room_03.tscn::a874f06bd2ff00505d36eff7ae8b76d9::1776237342::res://.godot/exported/133200997/export-ee457e63c5b755d2588701994fea05f4-room_03.scn
+res://scenes/web_showcase/core_time_play_recording_stage.tscn::6e0a76326ba68efef11ce8892c252c31::1777293017::res://.godot/exported/133200997/export-b1f6a66711368a22a142e245d09e59e3-core_time_play_recording_stage.scn
+res://scenes/web_showcase/core_time_play_replay_viewer.tscn::db4cabbfbcb7c14e6f68fe41af17f1af::1777293107::res://.godot/exported/133200997/export-a17d61f87d36beb142c15c7cd1f7ec76-core_time_play_replay_viewer.scn
+res://scenes/web_showcase/showcase_room.tscn::497d0fe05b526b948098e00a76028eda::1777293537::res://.godot/exported/133200997/export-07cb60f23dad28c6d827ae0c10c4eced-showcase_room.scn
+res://scenes/tutorial_hint_zone.tscn::dd973fa030275aeae600b3834be99e1b::1777033735::res://.godot/exported/133200997/export-c2dca5b355f5ef7470031df8450f9d2b-tutorial_hint_zone.scn

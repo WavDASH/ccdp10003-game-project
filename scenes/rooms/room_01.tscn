@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://u366xkgrrj1i" path="res://scenes/room_exit.tscn" id="5_exit"]
 [ext_resource type="Script" uid="uid://cx43umte7ywmv" path="res://scripts/terrain_block.gd" id="6_terrain"]
 [ext_resource type="PackedScene" path="res://scenes/crumble_block.tscn" id="8_10nlv"]
-[ext_resource type="PackedScene" path="res://scenes/tutorial_hint_zone.tscn" id="9_hint"]
+[ext_resource type="PackedScene" uid="uid://dlwlcdkxgpnmk" path="res://scenes/tutorial_hint_zone.tscn" id="9_hint"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2owu3"]
 size = Vector2(400, 96)
@@ -237,6 +237,7 @@ position = Vector2(711, 151)
 block_color = Color(0.5, 0.35, 0.2, 1)
 
 [node name="Tutorial" type="Node2D" parent="." unique_id=1986937210]
+visible = false
 
 [node name="HintIntro" parent="Tutorial" unique_id=1125675588 instance=ExtResource("9_hint")]
 position = Vector2(780, 490)
@@ -244,7 +245,21 @@ hint_text = "Move and jump. Reach the exit on the left."
 zone_size = Vector2(160, 120)
 hint_id = "r1_intro"
 label_offset = Vector2(0, -70)
-label_width = null
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintIntro" unique_id=1805208309]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -70.0
+offset_right = 160.0
+offset_bottom = 837.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "Move and jump. Reach the exit on the left."
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="HintCrumble" parent="Tutorial" unique_id=722185438 instance=ExtResource("9_hint")]
 position = Vector2(760, 410)
@@ -252,14 +267,42 @@ hint_text = "These brown blocks crumble when you stand on them."
 zone_size = Vector2(200, 140)
 hint_id = "r1_crumble"
 label_offset = Vector2(0, -90)
-label_width = null
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintCrumble" unique_id=805886729]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = 1025.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "These brown blocks crumble when you stand on them."
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="HintSwitch" parent="Tutorial" unique_id=1882675698 instance=ExtResource("9_hint")]
 position = Vector2(570, 200)
 hint_text = "Switches open the door — but this one needs BOTH pressed at once."
 zone_size = Vector2(200, 130)
 hint_id = "r1_switch"
-label_width = null
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintSwitch" unique_id=168764613]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = 1321.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "Switches open the door — but this one needs BOTH pressed at once."
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="HintReverse" parent="Tutorial" unique_id=2114015960 instance=ExtResource("9_hint")]
 position = Vector2(380, 320)
@@ -269,4 +312,19 @@ zone_size = Vector2(240, 160)
 hint_id = "r1_reverse"
 label_offset = Vector2(0, -100)
 font_size = 15
-label_width = null
+
+[node name="HintLabel" type="Label" parent="Tutorial/HintReverse" unique_id=197484039]
+modulate = Color(1, 1, 1, 0.7)
+custom_minimum_size = Vector2(320, 0)
+offset_left = -160.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = 2289.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 15
+text = "You can't hold both switches alone.
+Press R to reverse time — your path stays as an ECHO that can hold a switch."
+horizontal_alignment = 1
+autowrap_mode = 3
